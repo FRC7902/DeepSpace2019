@@ -15,6 +15,16 @@ public class Robot extends TimedRobot {
 
   public float yOut = 0;
 
+  public static void accelerate (double incr){
+    if(incr > -0.2 && incr < 0.2){
+      yOut = 0;
+    }else if(yOut < 1 && yOut > -1 ){
+      yOut = yOut + (incr * 0.05);
+    }
+  }
+  public static void turn (){
+
+  }
   // driver joystick
   private Joystick driver;
 
@@ -49,15 +59,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() { // called repeatedly during autonomous
-    /*
+   /* 
     long timePassed = System.currentTimeMillis() - this.autoStartTime; // find the difference of when auto started and
                                                                        // now
 
-    if (timePassed < 3000) { // drive forward for 3 seconds
-      this.leftDrive1.set(-0.3);
-      this.leftDrive2.set(-0.3);
-      this.rightDrive1.set(0.3);
-      this.rightDrive2.set(0.3);
+    if (timePassed < 300) { // drive forward for 3 seconds
+      
     } else if (timePassed < 5000) { // turn left for 5 seconds
       this.leftDrive1.set(0.3);
       this.leftDrive2.set(0.3);
@@ -71,7 +78,7 @@ public class Robot extends TimedRobot {
       this.rightDrive2.set(0);
 
     }
-*/
+ */
   }
 
   @Override
@@ -107,7 +114,7 @@ public class Robot extends TimedRobot {
     */
     double turnR = this.driver.getRawAxis(3) * 0.1;
     double turnL = this.driver.getRawAxis(2) * 0.1;
-    double driverX = -this.driver.getRawAxis(0) * 0.3; // match to the stick x axis
+    double driverX = -this.driver.getRawAxis(4) * 0.3; // match to the stick x axis
     float driverY = this.driver.getRawAxis(1); // match to the stick y axis
     /*
     double slider = -((this.driver.getRawAxis(3) - 1) / 2);
@@ -116,7 +123,7 @@ public class Robot extends TimedRobot {
 
     System.out.println(driverX);
     System.out.println(driverY);
-*/
+    */
   
   float inc = driverY * 0.03f;
   
@@ -126,6 +133,7 @@ public class Robot extends TimedRobot {
     yOut = yOut + inc;
   }else if(driverY < 0.3 && driverY > -0.3){
     yOut = 0;
+    driverX = 0;
   }
     
 

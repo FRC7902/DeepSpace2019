@@ -17,11 +17,12 @@ public class Robot extends TimedRobot {
   //when first created robot,
   static float yOut = 0; //yOut is zero
 
-  public static void accelerate (float incr){ //declare a method "accelerate"
+  public static void accelerate (float incr, double spin){ //declare a method "accelerate"
     if(incr > -0.2 && incr < 0.2){ //if incr is inbetween -0.2 and 0.2, set yOut to 0
       yOut = 0;
-    }else if(yOut < 1 && yOut > -1 ){ //if yOut is inbetween 1 and -1, add 1/20 of incr to yOut
-      yOut = yOut + (incr * 0.05);// error here
+      spin = 0;
+    }else if(yOut < 1 && yOut > -1 ){ //if yOut is inbetween 1 and -1, add 3% of incr to yOut
+      yOut = yOut + (incr * 0.03f);// the error should be fixed now
     }
   }
   public static void turn (){ //no Turn... yet
@@ -115,8 +116,8 @@ public class Robot extends TimedRobot {
     */
     double turnR = this.driver.getRawAxis(3) * 0.1; 
     double turnL = this.driver.getRawAxis(2) * 0.1;
-    double driverX = -this.driver.getRawAxis(4) * 0.3; // match to the stick x axis
-    double driverY = this.driver.getRawAxis(1); // match to the stick y axis
+    double driverX = -this.driver.getRawAxis(4) * 0.3; // match to the right stick x axis
+    float driverY = this.driver.getRawAxis(1); // match to the left stick y axis
     /*
     double slider = -((this.driver.getRawAxis(3) - 1) / 2);
 
@@ -126,7 +127,7 @@ public class Robot extends TimedRobot {
     System.out.println(driverY);
     */
   
-  float inc = (float)driverY * 0.03f; //declare inc as a 3% of driverY
+  float inc = driverY * 0.03f; //declare inc as a 3% of driverY
   
   if(driverY < -0.2 && yOut >= driverY){ //if driverY is less than -0.2 and less or equal to yOut
     yOut = yOut + inc;
@@ -134,13 +135,13 @@ public class Robot extends TimedRobot {
     yOut = yOut + inc;
   }else if(driverY < 0.3 && driverY > -0.3){// if driverY is inbetween 0.3 and -0.3
     yOut = 0;
-    driverX = 0;
+    driverX = 0; //dont turn
   }
     
 
 
     double leftOut = (double)yOut * 0.5 + turnL + driverX - turnR; 
-    double rightOut = (double)yOut * 0.5 + turnR - driverX - turnL ;
+    double rightOut = (double)yOut * 0.5 + turnR - driverX - turnL;
 
 
 

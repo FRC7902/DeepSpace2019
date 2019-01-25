@@ -2,7 +2,7 @@
 package frc.robot;
 
 import java.sql.Driver;
-
+//Arjun was here
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -13,9 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 
-  //public float yOut = 0;
-  //when first created robot,
-  static float yOut = 0; //yOut is zero
+  public static float yOut = 0;
 
   public static void accelerate (float incr, double spin){ //declare a method "accelerate"
     if(incr > -0.2 && incr < 0.2){ //if incr is inbetween -0.2 and 0.2, set yOut to 0
@@ -62,11 +60,15 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() { // called repeatedly during autonomous
-   /* 
-    long timePassed = System.currentTimeMillis() - this.autoStartTime; // find the difference of when auto started and
+    /*
+    long timePassed = System.currentTimeMillis() - this.autoStartTime; // find the difference of when auto started and                                                                 // now
 
-    if (timePassed < 300) { // drive forward for 3 seconds
-      
+ if (timePassed < 3000) { // drive forward for 3 seconds
+
+      this.leftDrive1.set(-0.3);
+      this.leftDrive2.set(-0.3);
+      this.rightDrive1.set(0.3);
+      this.rightDrive2.set(0.3);
     } else if (timePassed < 5000) { // turn left for 5 seconds
       this.leftDrive1.set(0.3);
       this.leftDrive2.set(0.3);
@@ -80,7 +82,7 @@ public class Robot extends TimedRobot {
       this.rightDrive2.set(0);
 
     }
- */
+*/
   }
 
   @Override
@@ -114,7 +116,7 @@ public class Robot extends TimedRobot {
     boolean Breaks = this.driver.getRawButton(12);
     boolean straight = this.driver.getRawButton(8);
     */
-    double turnR = this.driver.getRawAxis(3) * 0.1; 
+    double turnR = this.driver.getRawAxis(3) * 0.1;
     double turnL = this.driver.getRawAxis(2) * 0.1;
     double driverX = -this.driver.getRawAxis(4) * 0.3; // match to the right stick x axis
     float driverY = this.driver.getRawAxis(1); // match to the left stick y axis
@@ -140,7 +142,7 @@ public class Robot extends TimedRobot {
     
 
 
-    double leftOut = (double)yOut * 0.5 + turnL + driverX - turnR; 
+    double leftOut = (double)yOut * 0.5 + turnL + driverX - turnR;
     double rightOut = (double)yOut * 0.5 + turnR - driverX - turnL;
 
 

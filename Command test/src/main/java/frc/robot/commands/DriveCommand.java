@@ -12,26 +12,25 @@ import frc.robot.Robot;
 
 public class DriveCommand extends Command {
   public DriveCommand() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveSubsystem.stop();
+    Robot.driveSubsystem.stop();//stops the motors (resets them)
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.driveJoystick(Robot.m_oi.getDriverStick(), 1);
+    Robot.driveSubsystem.driveJoystick(Robot.m_oi.getDriverStick(), 1); //use the input from the driverStick and a speed of 1
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return false; //never finished
   }
 
   // Called once after isFinished returns true

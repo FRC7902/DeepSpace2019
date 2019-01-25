@@ -14,42 +14,43 @@ import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-/**
- * Add your docs here.
- */
-public class DriveSubsystem extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
 
-  Victor frontRight = new Victor(RobotMap.frontRight);
+public class DriveSubsystem extends Subsystem {
+  
+  //make a new Victor for each of the motors
+  Victor frontRight = new Victor(RobotMap.frontRight); 
   Victor frontLeft = new Victor(RobotMap.frontLeft);
   Victor backRight = new Victor(RobotMap.backRight);
   Victor backLeft = new Victor(RobotMap.backLeft);
 
+  //group these motors as speedControllers
   SpeedController leftSide = new SpeedControllerGroup(frontLeft, backLeft);
   SpeedController rightSide = new SpeedControllerGroup(frontRight, backRight);
 
+  //make this drive
   public DifferentialDrive drive;
 
-
+  //the contructor class
   public DriveSubsystem (){
+    //if a motor is inverted, switch the boolean
     frontRight.setInverted(false);
     frontLeft.setInverted(false);
     backRight.setInverted(false);
     backLeft.setInverted(false);
 
+    //drive is a new DifferentialDrive
     drive = new DifferentialDrive(leftSide, rightSide);
 
   }
-
+  //this method is for Joystick driving
   public void driveJoystick(Joystick joystick, double speed) {
     drive.arcadeDrive(joystick.getY()*speed, joystick.getX()*speed);
   }
-
+  //this method is just for normal driving
   public void drive(double speed, double rotationSpeed) {
     drive.arcadeDrive(speed, rotationSpeed);
   }
-
+  //this will end the motor
   public void stop() {
     drive.stopMotor();
   }

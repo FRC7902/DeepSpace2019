@@ -24,11 +24,7 @@ public class DriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-<<<<<<< HEAD
     Robot.driveSubsystem.driveJoystick(Robot.m_oi.getDriverStick(), 0.5);
-=======
-    Robot.driveSubsystem.driveJoystick(Robot.m_oi.getDriverStick(), 1); //use the input from the driverStick and a speed of 1
->>>>>>> 7b20442c4351d331f902c7dc5abdd104df6be09f
   }
 
   // Make this return true when this Command no longer needs to run execute()

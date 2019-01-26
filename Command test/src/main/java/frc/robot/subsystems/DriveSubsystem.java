@@ -50,11 +50,11 @@ public class DriveSubsystem extends Subsystem {
     
     
     if(joystick.getY() > (double)yOut && joystick.getY() > 0.1){
-      yOut = yOut + (float)joystick.getY() * 0.2f;
+      yOut = yOut + (float)joystick.getY() * 0.01f;
     }else if(joystick.getY() < (double)yOut && joystick.getY() < -0.1){
-      yOut = yOut + (float)joystick.getY() * 0.2f;
+      yOut = yOut + (float)joystick.getY() * 0.01f;
     }else if(joystick.getY() > -0.2 && joystick.getY() < 0.2){
-      yOut = yOut - yOut;
+      yOut = 0f;
     }
 
 

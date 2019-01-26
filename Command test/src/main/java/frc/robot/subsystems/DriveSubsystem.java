@@ -29,6 +29,8 @@ public class DriveSubsystem extends Subsystem {
   SpeedController leftSide = new SpeedControllerGroup(frontLeft, backLeft);
   SpeedController rightSide = new SpeedControllerGroup(frontRight, backRight);
 
+  float yOut = 0;
+
   public DifferentialDrive drive;
 
 
@@ -43,7 +45,18 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public void driveJoystick(Joystick joystick, double speed) {
-    drive.arcadeDrive(joystick.getY()*speed, joystick.getX()*speed);
+    
+    
+
+    if(joystick.getY() == 0){
+      yOut = 0;
+    }else{
+      yOut = (float)joystick.getY();
+    }
+
+
+
+    drive.arcadeDrive((double)yOut*speed, joystick.getX()*speed);
   }
 
   public void drive(double speed, double rotationSpeed) {

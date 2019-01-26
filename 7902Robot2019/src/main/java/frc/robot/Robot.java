@@ -119,7 +119,7 @@ public class Robot extends TimedRobot {
     double turnR = this.driver.getRawAxis(3) * 0.1;
     double turnL = this.driver.getRawAxis(2) * 0.1;
     double driverX = -this.driver.getRawAxis(4) * 0.3; // match to the right stick x axis
-    float driverY = this.driver.getRawAxis(1); // match to the left stick y axis
+    float driverY = (float)this.driver.getRawAxis(1); // match to the left stick y axis
     /*
     double slider = -((this.driver.getRawAxis(3) - 1) / 2);
 
@@ -135,16 +135,22 @@ public class Robot extends TimedRobot {
     yOut = yOut + inc;
   }else if(driverY > 0.2 && yOut <= driverY){ // if driverY is greater than 0.2 and greater or equal to yOut
     yOut = yOut + inc;
-  }else if(driverY < 0.3 && driverY > -0.3){// if driverY is inbetween 0.3 and -0.3
+  }
+  if((double)driverY < 0.3 && (double)driverY > -0.3){// if driverY is inbetween 0.3 and -0.3
     yOut = 0;
     driverX = 0; //dont turn
   }
     
 
+<<<<<<< HEAD
 
     double leftOut = (double)yOut * 0.5 + turnL + driverX - turnR;
+=======
+    
+    double leftOut = (double)yOut * 0.5 + turnL + driverX - turnR; 
+>>>>>>> 9656f788cc7513555f8bc22d4ade113b39e575bd
     double rightOut = (double)yOut * 0.5 + turnR - driverX - turnL;
-
+    System.out.println("active");
 
 
     /*

@@ -6,7 +6,9 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
+
 import frc.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -27,7 +29,8 @@ public class DriveSubsystem extends Subsystem {
   SpeedController leftSide = new SpeedControllerGroup(frontLeft, backLeft);
   SpeedController rightSide = new SpeedControllerGroup(frontRight, backRight);
 
-  //make this drive
+  float yOut = 0;
+
   public DifferentialDrive drive;
 
   //the contructor class
@@ -44,9 +47,18 @@ public class DriveSubsystem extends Subsystem {
   }
   //this method is for Joystick driving
   public void driveJoystick(Joystick joystick, double speed) {
-
     
-    drive.arcadeDrive(joystick.getY()*speed, joystick.getX()*speed);
+    
+
+    if(joystick.getY() == 0){
+      yOut = 0;
+    }else{
+      yOut = (float)joystick.getY();
+    }
+
+
+
+    drive.arcadeDrive((double)yOut*speed, joystick.getX()*speed);
   }
   //this method is just for normal driving
   public void drive(double speed, double rotationSpeed) {

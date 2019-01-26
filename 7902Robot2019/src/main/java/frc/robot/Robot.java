@@ -135,15 +135,15 @@ public class Robot extends TimedRobot {
     yOut = yOut + inc;
   }
   if((double)driverY < 0.3 && (double)driverY > -0.3){// if driverY is inbetween 0.3 and -0.3
-    yOut = 0f;
+    yOut = 0;
     driverX = 0; //dont turn
   }
     
 
-
+    
     double leftOut = (double)yOut * 0.5 + turnL + driverX - turnR; 
     double rightOut = (double)yOut * 0.5 + turnR - driverX - turnL;
-
+    System.out.println("active");
 
 
     /*

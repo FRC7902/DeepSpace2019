@@ -49,11 +49,12 @@ public class DriveSubsystem extends Subsystem {
   public void driveJoystick(Joystick joystick, double speed) {
     
     
-
-    if(joystick.getY() == 0){
-      yOut = 0;
-    }else{
-      yOut = (float)joystick.getY();
+    if(joystick.getY() > (double)yOut && joystick.getY() > 0.1){
+      yOut = yOut + (float)joystick.getY() * 0.2f;
+    }else if(joystick.getY() < (double)yOut && joystick.getY() < -0.1){
+      yOut = yOut + (float)joystick.getY() * 0.2f;
+    }else if(joystick.getY() > -0.2 && joystick.getY() < 0.2){
+      yOut = yOut - yOut;
     }
 
 

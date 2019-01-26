@@ -30,6 +30,11 @@ public class DriveSubsystem extends Subsystem {
   SpeedController rightSide = new SpeedControllerGroup(frontRight, backRight);
 
   float yOut = 0;
+  boolean brake = false;
+  float[] motorHist;
+  float averagePower = 0;
+  int brakeTime = 0;
+  int currbrakeTime = 0;
 
   public DifferentialDrive drive;
 
@@ -49,14 +54,38 @@ public class DriveSubsystem extends Subsystem {
   public void driveJoystick(Joystick joystick, double speed) {
     
     
-    if(joystick.getY() > (double)yOut && joystick.getY() > 0.1){
-      yOut = yOut + (float)joystick.getY() * 0.01f;
-    }else if(joystick.getY() < (double)yOut && joystick.getY() < -0.1){
-      yOut = yOut + (float)joystick.getY() * 0.01f;
-    }else if(joystick.getY() > -0.2 && joystick.getY() < 0.2){
-      yOut = 0f;
+    if(joystick.getY() > (double)yOut && joystick.getY() > 0.1){//if joystict.getY is bigger than yOut and 0.1
+      yOut = yOut + (float)joystick.getY() * 0.01f; //increment yOut by a bit of joystick.getY
+      brake = false; //brake is set to false
+      currbrakeTime = 0; //clean currbrakeTime
+      brakeTime = 0; //clean brakeTime
+      if(motorHist.length == RobotMap.motorHistLen){ //if motorHist.length reached RobotMap.motorHistLen 
+        motorHist[50] = yOut*(float)speed; //add yOut*speed to the end of motorHist
+        RobotMap.removeTheElement(motorHist, 0); //remove the first item of motorHist
+      }
+    }/*else if(joystick.getY() < (double)yOut && joystick.getY() < -0.1){ //if joystick.getY is smaller than yOut and -0.1
+      yOut = yOut + (float)joystick.getY() * 0.01f; //increment yOut by a bit of joystick.getY
+    }*/else if(joystick.getY() > -0.2 && joystick.getY() < 0.2){ //if joystick.getY is in between -0.2 and 0.2
+      yOut = 0f; //yOut is now 0
     }
+    
+    if(joystick.getY() == 0){//when you want the robot to stop
+      averagePower = RobotMap.findTheAverage(motorHist); //find the average power of the motorHist
+      brakeTime = (int)Math.round(averagePower * RobotMap.brakeDurMult);//calculate the brakeTime
+      brake = true; //brake is now true
+      if(brake == true){ //when brake is true
+        yOut = -1/(float)speed; //set yOut to -1 in the output
+        currbrakeTime++; //add one to currBrakeTime
 
+      }
+      if(currbrakeTime == brakeTime){//when currBrakeTime has reached brakeTime
+        yOut = 0; //yOut is 0
+        brake = false; //brake is false
+        currbrakeTime = 0; //clean currBrakeTime
+        brakeTime = 0;// and brakeTime
+      }
+      
+    }
 
 
     drive.arcadeDrive((double)yOut*speed, joystick.getX()*speed);

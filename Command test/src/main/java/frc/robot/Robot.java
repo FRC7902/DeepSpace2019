@@ -16,6 +16,8 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.commands.DriveToDistanceCommand;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,12 +27,14 @@ import frc.robot.subsystems.ExampleSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
+
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
 
   Command m_autonomousCommand;
   Command driveCommand = new DriveCommand();
+  Command driveToDistanceCommand = new DriveToDistanceCommand(5, .5);
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /**
@@ -86,6 +90,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
 
+    driveToDistanceCommand.start();
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand

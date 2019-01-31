@@ -9,34 +9,52 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+/** 
+ * sadasdasd
+ * 
+ * 
+ * **/ 
+public class DriveToDistanceCommand extends Command {
 
-public class DriveCommand extends Command {
-  public DriveCommand() {
-    
-  }
+  DriveCommand driveCommand = new DriveCommand();
+
+  double distance = 0.0;
+  double speed = 0.0;
   
+  public DriveToDistanceCommand(double distance, double speed) {
+    this.distance = distance;
+    this.speed = speed;
+  }
+
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveSubsystem.stop();//stops the motors (resets them)
+    Robot.driveSubsystem.stop();
+    Robot.driveSubsystem.encReset();
+    driveCommand.cancel();
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.driveJoystick(Robot.m_oi.getDriverStick(), 1);
+    Robot.driveSubsystem.drive(speed, 0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false; //never finished
+    return Math.abs(Robot.driveSubsystem.getAvgDistance()-distance)<=0.1;
+
+    
+
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
     Robot.driveSubsystem.stop();
+    driveCommand.start();
   }
 
   // Called when another command which requires one or more of the same

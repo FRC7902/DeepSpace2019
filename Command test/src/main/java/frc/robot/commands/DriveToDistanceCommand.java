@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 /** 
@@ -45,7 +46,7 @@ public class DriveToDistanceCommand extends Command {
   @Override
   protected boolean isFinished() {
     return Math.abs(Robot.driveSubsystem.getAvgDistance()-distance)<=0.1;
-
+    
     
 
   }
@@ -55,6 +56,7 @@ public class DriveToDistanceCommand extends Command {
   protected void end() {
     Robot.driveSubsystem.stop();
     driveCommand.start();
+    DriverStation.reportWarning("DONE DRIVING", false);
   }
 
   // Called when another command which requires one or more of the same

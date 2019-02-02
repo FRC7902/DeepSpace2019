@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
-import edu.wpi.first.wpilibj.Encoder;
+//import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -29,9 +29,10 @@ public class DriveSubsystem extends Subsystem {
   SpeedController leftSide = new SpeedControllerGroup(frontLeft, backLeft);
   SpeedController rightSide = new SpeedControllerGroup(frontRight, backRight);
 
+  /*
   Encoder leftEnc = new Encoder(RobotMap.leftEnc1, RobotMap.leftEnc2, false, Encoder.EncodingType.k4X);
   Encoder rightEnc = new Encoder(RobotMap.rightEnc1, RobotMap.rightEnc2, false, Encoder.EncodingType.k4X);
-
+  */
   float yOut = 0;
   boolean brake = false;
   float[] motorHist;
@@ -52,7 +53,7 @@ public class DriveSubsystem extends Subsystem {
     //drive is a new DifferentialDrive
     drive = new DifferentialDrive(leftSide, rightSide);
 
-    rightEnc.setReverseDirection(true);
+    //rightEnc.setReverseDirection(true);
   }
   //this method is for Joystick driving
   public void driveJoystick(Joystick joystick, double speed) {
@@ -60,6 +61,7 @@ public class DriveSubsystem extends Subsystem {
     
     if(joystick.getY() > (double)yOut && joystick.getY() > 0.1){//if joystict.getY is bigger than yOut and 0.1
       yOut = yOut + (float)joystick.getY() * 0.01f; //increment yOut by a bit of joystick.getY
+      /*
       brake = false; //brake is set to false
       currbrakeTime = 0; //clean currbrakeTime
       brakeTime = 0; //clean brakeTime
@@ -67,12 +69,14 @@ public class DriveSubsystem extends Subsystem {
         motorHist[50] = yOut*(float)speed; //add yOut*speed to the end of motorHist
         RobotMap.removeTheElement(motorHist, 0); //remove the first item of motorHist
       }
+      */
     }/*else if(joystick.getY() < (double)yOut && joystick.getY() < -0.1){ //if joystick.getY is smaller than yOut and -0.1
       yOut = yOut + (float)joystick.getY() * 0.01f; //increment yOut by a bit of joystick.getY
-    }*/else if(joystick.getY() > -0.2 && joystick.getY() < 0.2){ //if joystick.getY is in between -0.2 and 0.2
+    }*/
+    else if(joystick.getY() > -0.2 && joystick.getY() < 0.2){ //if joystick.getY is in between -0.2 and 0.2
       yOut = 0f; //yOut is now 0
     }
-    
+    /*
     if(joystick.getY() == 0){//when you want the robot to stop
       averagePower = RobotMap.findTheAverage(motorHist); //find the average power of the motorHist
       brakeTime = (int)Math.round(averagePower * RobotMap.brakeDurMult);//calculate the brakeTime
@@ -89,7 +93,7 @@ public class DriveSubsystem extends Subsystem {
         brakeTime = 0;// and brakeTime
       }
       
-    }
+    }*/
 
 
     drive.arcadeDrive((double)yOut*speed, joystick.getX()*speed);
@@ -102,7 +106,7 @@ public class DriveSubsystem extends Subsystem {
   public void stop() {
     drive.stopMotor();
   }
-
+  /*
   public double getLeftRaw(){
     return leftEnc.getRaw();
   }
@@ -124,7 +128,7 @@ public class DriveSubsystem extends Subsystem {
 		leftEnc.reset();
 		rightEnc.reset();
 	}
-  
+  */
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

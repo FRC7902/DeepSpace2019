@@ -13,12 +13,13 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.ArmAndDrive;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.commands.DriveToDistanceCommand;
-
+import frc.robot.subsystems.ArmSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
 
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
+  public static ArmSubsystem armSubsystem = new ArmSubsystem();
   public static OI m_oi;
 
   Command m_autonomousCommand;
@@ -38,6 +40,8 @@ public class Robot extends TimedRobot {
   Command driveToDistanceCommand = new DriveToDistanceCommand(5, .5);
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
+
+  public static ArmAndDrive armAndDrive = new ArmAndDrive();
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -94,7 +98,7 @@ public class Robot extends TimedRobot {
 
     DriverStation.reportWarning("THIS IS A TEST MESSAGE", false);
 
-    driveToDistanceCommand.start();
+    
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -122,7 +126,8 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    driveCommand.start();
+    armAndDrive.start();
+
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();

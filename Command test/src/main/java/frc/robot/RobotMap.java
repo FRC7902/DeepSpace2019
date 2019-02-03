@@ -18,10 +18,10 @@ public class RobotMap {
   // following variables to use with your drivetrain subsystem.
   // public static int leftMotor = 1;
   // public static int rightMotor = 2;
-  public static final int frontRight = 0;
-  public static final int backRight = 1;
-  public static final int frontLeft = 2;
-  public static final int backLeft = 3;
+  public static final int frontRight = 1;
+  public static final int backRight = 2;
+  public static final int frontLeft = 3;
+  public static final int backLeft = 4;
 
   public static final int motorHistLen = 50;
   public static final float brakeDurMult = 40;

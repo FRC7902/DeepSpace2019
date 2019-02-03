@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
-import edu.wpi.first.wpilibj.Encoder;
+//import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -31,9 +31,11 @@ public class DriveSubsystem extends Subsystem {
   SpeedController leftSide = new SpeedControllerGroup(frontLeft, backLeft);
   SpeedController rightSide = new SpeedControllerGroup(frontRight, backRight);
 
-  Encoder leftEnc = new Encoder(RobotMap.leftEnc1, RobotMap.leftEnc2, false, Encoder.EncodingType.k4X);
-  Encoder rightEnc = new Encoder(RobotMap.rightEnc1, RobotMap.rightEnc2, false, Encoder.EncodingType.k4X);
-
+  /*
+   * Encoder leftEnc = new Encoder(RobotMap.leftEnc1, RobotMap.leftEnc2, false,
+   * Encoder.EncodingType.k4X); Encoder rightEnc = new Encoder(RobotMap.rightEnc1,
+   * RobotMap.rightEnc2, false, Encoder.EncodingType.k4X);
+   */
   float yOut = 0;
   boolean brake = false;
   float[] motorHist;
@@ -54,7 +56,7 @@ public class DriveSubsystem extends Subsystem {
     // drive is a new DifferentialDrive
     drive = new DifferentialDrive(leftSide, rightSide);
 
-    rightEnc.setReverseDirection(true);
+    // rightEnc.setReverseDirection(true);
   }
 
   // this method is for Joystick driving
@@ -108,32 +110,27 @@ public class DriveSubsystem extends Subsystem {
     drive.stopMotor();
   }
 
-  public double getLeftRaw() {
-    return leftEnc.getRaw();
-  }
-
-  public double getRightRaw() {
-    return rightEnc.getRaw();
-  }
-
-  public double getRawAvg() {
-    return (leftEnc.getRaw() + rightEnc.getRaw()) / 2;
-  }
-
-  public double getAvgDistance() {
-    return getRawAvg() * 0.0008;
-  }
-
-  // Resets the encoders so that they read from 0 again
-  public void encReset() {
-    leftEnc.reset();
-    rightEnc.reset();
-  }
-
   @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-  }
+  protected void initDefaultCommand() {
 
+  }
 }
+
+/*
+ * public double getLeftRaw(){ return leftEnc.getRaw(); }
+ * 
+ * public double getRightRaw() { return rightEnc.getRaw(); }
+ * 
+ * public double getRawAvg() { return (leftEnc.getRaw() + rightEnc.getRaw()) /
+ * 2; }
+ * 
+ * public double getAvgDistance() { return getRawAvg() * 0.0008; }
+ * 
+ * // Resets the encoders so that they read from 0 again public void encReset()
+ * { leftEnc.reset(); rightEnc.reset(); }
+ * 
+ * @Override public void initDefaultCommand() { // Set the default command for a
+ * subsystem here. // setDefaultCommand(new MySpecialCommand()); }
+ * 
+ * }
+ */

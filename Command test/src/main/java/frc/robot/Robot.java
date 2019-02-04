@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArmAndDrive;
+import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
   Command m_autonomousCommand;
   Command driveCommand = new DriveCommand();
   Command driveToDistanceCommand = new DriveToDistanceCommand(5, .5);
+  Command armCommand = new ArmCommand();
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 
@@ -126,7 +128,8 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    armAndDrive.start();
+    //armAndDrive.start();
+    armCommand.start();
 
 
     if (m_autonomousCommand != null) {

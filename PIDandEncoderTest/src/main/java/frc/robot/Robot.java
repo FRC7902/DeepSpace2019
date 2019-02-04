@@ -27,7 +27,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class Robot extends TimedRobot {
   
-  WPI_TalonSRX myTalon = new WPI_TalonSRX(2);
+  WPI_TalonSRX myTalon = new WPI_TalonSRX(5);
   Joystick myJoystick = new Joystick(0);
 
   /** Used to create string thoughout loop */

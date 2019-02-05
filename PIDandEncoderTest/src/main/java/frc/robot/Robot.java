@@ -76,6 +76,12 @@ public class Robot extends TimedRobot {
     
   }
 
+  @Override
+  public void teleopInit() {
+
+    
+  }
+
   /**
    * This function is called periodically during operator control.
    */
@@ -83,27 +89,26 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     //Phase 1
 
-    myTalon.set(ControlMode.PercentOutput, 1);
+    //myTalon.set(ControlMode.PercentOutput, 1);
 
     //Phase 2
     /*
     myTalon.set(ControlMode.PercentOutput, myJoystick.getY());
     */
 
-    //Phase 3
-    /*
+    
     myTalon.set(ControlMode.PercentOutput, myJoystick.getY());
     
-    */
+    
 
 
     //Phase 1.1
 
-    DriverStation.reportWarning("Hasta la Vista", false);
+    //DriverStation.reportWarning("Hasta la Vista", false);
 
     //Phase 1.2
     
-    // SmartDashboard.putString("DB/String 0", "Hasta la Vista");
+    SmartDashboard.putString("DB/String 0", "Hasta la Vista");
 
     //Phase 2.1
 

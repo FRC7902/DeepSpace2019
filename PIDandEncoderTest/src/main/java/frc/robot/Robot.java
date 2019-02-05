@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    myTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, //something i dont know
+    myTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, //something i dont know
     0,//PID ID, which is basically 0
     30); //the timeout, which is 30 ms
     

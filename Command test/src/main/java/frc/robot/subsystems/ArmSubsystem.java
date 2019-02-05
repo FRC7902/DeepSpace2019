@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  */
 public class ArmSubsystem extends Subsystem {
   //TalonSRX myTalon = new TalonSRX(0);//set this to the correct port
-  WPI_TalonSRX myTalon = new WPI_TalonSRX(0);
+  WPI_TalonSRX myTalon = new WPI_TalonSRX(5);
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
@@ -37,7 +37,7 @@ public class ArmSubsystem extends Subsystem {
     myTalon.disable();
   }
 
-  public double getArmSpeed(){
+  public double getArmPosition(){
     return myTalon.getSensorCollection().getPulseWidthPosition();
 
   }

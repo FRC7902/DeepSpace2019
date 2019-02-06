@@ -32,14 +32,7 @@ public class RobotMap {
   public static final int motorHistLen = 50;
   public static final float brakeDurMult = 40;
 
-  public static final int leftEnc1 = 0;
-  public static final int leftEnc2 = 1;
-  public static final int rightEnc1 = 2;
-  public static final int rightEnc2 = 3;
-  // If you are using multiple modules, make sure to define both the port
-  // number and the module. For example you with a rangefinder:
-  // public static int rangefinderPort = 1;
-  // public static int rangefinderModule = 1;
+  
 
   //a method for removing an element from an array
   public static float[] removeTheElement(float[] arr, int index){
@@ -62,15 +55,15 @@ public class RobotMap {
   }
 
   //finding an average from array
-  public static float findTheAverage(float[] arr){
-    float sum = 0;
+ // public static float findTheAverage(float[] arr){
+   // float sum = 0;
 
-    for(int i = 0; i < arr.length; i++){
-      sum = sum + arr[i];
+    //for(int i = 0; i < arr.length; i++){
+      //sum = sum + arr[i];
 
-    }
-    sum = sum/arr.length;
-    return sum;
+    //}
+    //sum = sum/arr.length;
+    //return sum;
 
   }
-}
+

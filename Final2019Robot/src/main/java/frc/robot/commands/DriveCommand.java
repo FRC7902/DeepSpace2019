@@ -12,7 +12,7 @@ import frc.robot.Robot;
 
 public class DriveCommand extends Command {
   public DriveCommand() {
-    
+    requires (Robot.driveSubsystem);
   }
   
   // Called just before this Command runs the first time

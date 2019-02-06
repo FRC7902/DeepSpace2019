@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.robot.commands.ArmAndDrive;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DriveCommand;
@@ -129,7 +130,8 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     //armAndDrive.start();
-    armCommand.start();
+    driveCommand.start();
+
 
 
     if (m_autonomousCommand != null) {

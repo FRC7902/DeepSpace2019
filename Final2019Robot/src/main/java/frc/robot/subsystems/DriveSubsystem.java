@@ -78,23 +78,23 @@ public class DriveSubsystem extends Subsystem {
       yOut = 0f; // yOut is now 0
     }
 
-    if (joystick.getY() == 0) {// when you want the robot to stop
-      averagePower = RobotMap.findTheAverage(motorHist); // find the average power of the motorHist
-      brakeTime = (int) Math.round(averagePower * RobotMap.brakeDurMult);// calculate the brakeTime
-      brake = true; // brake is now true
-      if (brake == true) { // when brake is true
-        yOut = -1 / (float) speed; // set yOut to -1 in the output
-        currbrakeTime++; // add one to currBrakeTime
+    // if (joystick.getY() == 0) {// when you want the robot to stop
+    //   averagePower = RobotMap.findTheAverage(motorHist); // find the average power of the motorHist
+    //   brakeTime = (int) Math.round(averagePower * RobotMap.brakeDurMult);// calculate the brakeTime
+    //   brake = true; // brake is now true
+    //   if (brake == true) { // when brake is true
+    //     yOut = -1 / (float) speed; // set yOut to -1 in the output
+    //     currbrakeTime++; // add one to currBrakeTime
 
-      }
-      if (currbrakeTime == brakeTime) {// when currBrakeTime has reached brakeTime
-        yOut = 0; // yOut is 0
-        brake = false; // brake is false
-        currbrakeTime = 0; // clean currBrakeTime
-        brakeTime = 0;// and brakeTime
-      }
+    //   }
+    //   if (currbrakeTime == brakeTime) {// when currBrakeTime has reached brakeTime
+    //     yOut = 0; // yOut is 0
+    //     brake = false; // brake is false
+    //     currbrakeTime = 0; // clean currBrakeTime
+    //     brakeTime = 0;// and brakeTime
+    //   }
 
-    }
+    // }
 
     drive.arcadeDrive((double) yOut * speed, joystick.getX() * speed);
   }

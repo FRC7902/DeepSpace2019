@@ -25,6 +25,7 @@ public class DriveToDistanceCommand extends Command {
   public DriveToDistanceCommand(double distance, double speed) {
     this.distance = distance;
     this.speed = speed;
+    requires (Robot.driveSubsystem);
   }
 
   // Called just before this Command runs the first time

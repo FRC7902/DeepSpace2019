@@ -10,6 +10,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
+
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -22,7 +24,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  */
 public class ArmSubsystem extends Subsystem {
   //TalonSRX myTalon = new TalonSRX(0);//set this to the correct port
-  WPI_TalonSRX myTalon = new WPI_TalonSRX(5);
+  WPI_TalonSRX myTalon = new WPI_TalonSRX(RobotMap.armMotor);
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 

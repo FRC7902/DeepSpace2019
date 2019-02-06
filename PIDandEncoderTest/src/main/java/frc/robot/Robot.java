@@ -96,7 +96,7 @@ public class Robot extends TimedRobot {
     myTalon.set(ControlMode.PercentOutput, myJoystick.getY());
     */
 
-    
+    //Phase 3
     myTalon.set(ControlMode.PercentOutput, myJoystick.getY());
     
     

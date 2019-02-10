@@ -29,13 +29,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class Robot extends TimedRobot {
   WPI_TalonSRX myTalon = new WPI_TalonSRX(5);
   Joystick myJoystick = new Joystick(0);
-
+  public final int desPosition = 400;
 
   
   
   @Override
   public void robotInit() {
-    //myTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+    myTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
   }
   /**
    * This function is called every robot packet, no matter the mode. Use
@@ -87,44 +87,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    //Phase 1
 
-    //myTalon.set(ControlMode.PercentOutput, 1);
-
-    //Phase 2
-    /*
+    
+    //Constants
     myTalon.set(ControlMode.PercentOutput, myJoystick.getY());
-    */
 
-    //Phase 3
-    myTalon.set(ControlMode.PercentOutput, myJoystick.getY());
-    
-    
+    SmartDashboard.putString("DB/String 0", "Position: " + Integer.toString(myTalon.getSelectedSensorPosition()));
+    SmartDashboard.putString("DB/String 1",  "Speed: " + Double.toString(myTalon.get()));
 
-
-    //Phase 1.1
-
-    //DriverStation.reportWarning("Hasta la Vista", false);
-
-    //Phase 1.2
-    
-    //SmartDashboard.putString("DB/String 0", "Hasta la Vista");
-
-    //Phase 2.1
-
-    //DriverStation.reportWarning(Double.toString(myJoystick.getY()), false);
-
-    //Phase 2.2
-
-    // SmartDashboard.putString("DB/String 0", Double.toString(myJoystick.getY()));
-
-    //Phase 3.1
-
-    DriverStation.reportWarning(Integer.toString(myTalon.getSelectedSensorPosition()), false);
-
-    //Phase 3.2
-
-    SmartDashboard.putString("DB/String 0", Integer.toString(myTalon.getSelectedSensorPosition()));
 
 
   }

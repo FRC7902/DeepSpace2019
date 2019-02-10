@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.commands.ArmAndDrive;
+import frc.robot.commands.TeleOp;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
@@ -46,7 +46,7 @@ public class Robot extends TimedRobot {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 
-  public static ArmAndDrive armAndDrive = new ArmAndDrive();
+  public static TeleOp armAndDrive = new TeleOp();
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.

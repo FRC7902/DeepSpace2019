@@ -7,16 +7,12 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 
 /**
@@ -28,7 +24,7 @@ public class ArmSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  Encoder enc = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+  
 
   public void moveArm(Joystick joystick, double speed) {
     myTalon.set(ControlMode.PercentOutput, joystick.getY()*speed);
@@ -39,9 +35,13 @@ public class ArmSubsystem extends Subsystem {
     myTalon.disable();
   }
 
-  public double getArmPosition(){
-    return myTalon.getSensorCollection().getPulseWidthPosition();
+  public int getArmPosition(){
+    return myTalon.getSelectedSensorPosition();
 
+  }
+
+  public int getArmVelocity(){
+    return myTalon.getSelectedSensorVelocity();
   }
   
   @Override

@@ -7,10 +7,9 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.subsystems.ArmSubsystem;
 
 public class ArmCommand extends Command {
   public ArmCommand() {
@@ -30,7 +29,7 @@ public class ArmCommand extends Command {
   @Override
   protected void execute() {
     Robot.armSubsystem.moveArm(Robot.m_oi.getOperatorStick(), 1);
-    DriverStation.reportWarning(Double.toString(Robot.armSubsystem.getArmPosition()), false);
+    SmartDashboard.putString("DB/String 0", "Position: " + Robot.armSubsystem.getArmPosition());
   }
 
   // Make this return true when this Command no longer needs to run execute()

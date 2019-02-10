@@ -24,11 +24,16 @@ public class ArmSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  
 
   public void moveArm(Joystick joystick, double speed) {
     myTalon.set(ControlMode.PercentOutput, joystick.getY()*speed);
-    
+
+    if(getArmPosition() >= 4000 ){//will need to be adjusted
+      myTalon.set(ControlMode.PercentOutput, 0.1);
+    }else if(getArmPosition() <= 10){
+      myTalon.set(ControlMode.PercentOutput, 0.1);
+    }
+
   }
 
   public void stopArm(){

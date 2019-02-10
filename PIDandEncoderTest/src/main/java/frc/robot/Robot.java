@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
   
   @Override
   public void robotInit() {
-    myTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+    //myTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
   }
   /**
    * This function is called every robot packet, no matter the mode. Use
@@ -108,11 +108,11 @@ public class Robot extends TimedRobot {
 
     //Phase 1.2
     
-    SmartDashboard.putString("DB/String 0", "Hasta la Vista");
+    //SmartDashboard.putString("DB/String 0", "Hasta la Vista");
 
     //Phase 2.1
 
-    // DriverStation.reportWarning(Double.toString(myJoystick.getY()), false);
+    //DriverStation.reportWarning(Double.toString(myJoystick.getY()), false);
 
     //Phase 2.2
 
@@ -120,11 +120,11 @@ public class Robot extends TimedRobot {
 
     //Phase 3.1
 
-    // DriverStation.reportWarning(Integer.toString(myTalon.getSelectedSensorPosition()), false);
+    DriverStation.reportWarning(Integer.toString(myTalon.getSelectedSensorPosition()), false);
 
     //Phase 3.2
 
-    // SmartDashboard.putString("DB/String 0", Integer.toString(myTalon.getSelectedSensorPosition()));
+    SmartDashboard.putString("DB/String 0", Integer.toString(myTalon.getSelectedSensorPosition()));
 
 
   }

@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -26,134 +27,16 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
 public class Robot extends TimedRobot {
-  
   WPI_TalonSRX myTalon = new WPI_TalonSRX(5);
   Joystick myJoystick = new Joystick(0);
+  public final int desPosition = 400;
 
-  /** Used to create string thoughout loop */
-	StringBuilder _sb = new StringBuilder();
-	int _loops = 0;
-	
-    /** Track button state for single press event */
-	boolean _lastButton1 = false;
-
-	/** Save the target position to servo to */
-	double targetPositionRotations;
-  /**
-   * This function is run when the robot is first started up and should be
-   * used for any initialization code.
-   */
+  
+  
   @Override
   public void robotInit() {
-    myTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, //something i dont know
-    0,//PID ID, which is basically 0
-    30); //the timeout, which is 30 ms
-    
-
-    //make sure the sensor makes a positive, when the sensors is positive. I really don't know why this is here
-    myTalon.setSensorPhase(true);
-
-    //we do not want the motor to be inverted, therefor it is false
-    myTalon.setInverted(false); 
-
-    // I honestly don't know what this does. Something to do with 12V 
-    myTalon.configNominalOutputForward(0, 30);
-		myTalon.configNominalOutputReverse(0, 30);
-		myTalon.configPeakOutputForward(1, 30);
-    myTalon.configPeakOutputReverse(-1, 30);
-    
-    //configure the error... something something
-    myTalon.configAllowableClosedloopError(0, 0, 30);
-
-
-    myTalon.config_kF(0, 0.0, 30);
-		myTalon.config_kP(0, 0.15, 30);
-		myTalon.config_kI(0, 0.0, 30);
-		myTalon.config_kD(0, 1.0, 30);
-
-    //get the starting position, and make it absolutePosition
-    int absolutePosition = myTalon.getSensorCollection().getPulseWidthPosition();
-
-    /* Mask out overflows, keep bottom 12 bits */
-		absolutePosition &= 0xFFF;
-		if (true) { absolutePosition *= -1; }
-		if (false) {absolutePosition *= -1; }
-		
-		/* Set the quadrature (relative) sensor to match absolute */
-		myTalon.setSelectedSensorPosition(absolutePosition, 0, 30);
+    myTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
   }
-
-  void commonLoop() {
-		/* Gamepad processing */
-		double leftYstick = myJoystick.getY();
-		boolean button1 = myJoystick.getRawButton(1);	// X-Button
-		boolean button2 = myJoystick.getRawButton(2);	// A-Button
-
-		/* Get Talon/Victor's current output percentage */
-		double motorOutput = myTalon.getMotorOutputPercent();
-
-		/* Deadband gamepad */
-		if (Math.abs(leftYstick) < 0.10) {
-			/* Within 10% of zero */
-			leftYstick = 0;
-		}
-
-		/* Prepare line to print */
-		_sb.append("\tout:");
-		/* Cast to int to remove decimal places */
-		_sb.append((int) (motorOutput * 100));
-		_sb.append("%");	// Percent
-
-		_sb.append("\tpos:");
-		_sb.append(myTalon.getSelectedSensorPosition(0));
-		_sb.append("u"); 	// Native units
-
-		/**
-		 * When button 1 is pressed, perform Position Closed Loop to selected position,
-		 * indicated by Joystick position x10, [-10, 10] rotations
-		 */
-		if (!_lastButton1 && button1) {
-			/* Position Closed Loop */
-
-			/* 10 Rotations * 4096 u/rev in either direction */
-			targetPositionRotations = leftYstick * 10.0 * 4096;
-			myTalon.set(ControlMode.Position, targetPositionRotations);
-		}
-
-		/* When button 2 is held, just straight drive */
-		if (button2) {
-			/* Percent Output */
-
-			myTalon.set(ControlMode.PercentOutput, leftYstick);
-		}
-
-		/* If Talon is in position closed-loop, print some more info */
-		if (myTalon.getControlMode() == ControlMode.Position) {
-			/* ppend more signals to print when in speed mode. */
-			_sb.append("\terr:");
-			_sb.append(myTalon.getClosedLoopError(0));
-			_sb.append("u");	// Native Units
-
-			_sb.append("\ttrg:");
-			_sb.append(targetPositionRotations);
-			_sb.append("u");	/// Native Units
-		}
-
-		/**
-		 * Print every ten loops, printing too much too fast is generally bad
-		 * for performance.
-		 */
-		if (++_loops >= 10) {
-			_loops = 0;
-			System.out.println(_sb.toString());
-		}
-
-		/* Reset built string for next loop */
-		_sb.setLength(0);
-		
-		/* Save button state for on press detect */
-		_lastButton1 = button1;
-    }
   /**
    * This function is called every robot packet, no matter the mode. Use
    * this for items like diagnostics that you want ran during disabled,
@@ -164,6 +47,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+
   }
 
   /**
@@ -192,12 +76,29 @@ public class Robot extends TimedRobot {
     
   }
 
+  @Override
+  public void teleopInit() {
+
+    
+  }
+
   /**
    * This function is called periodically during operator control.
    */
   @Override
   public void teleopPeriodic() {
-    commonLoop();
+    
+
+
+    
+    //Constants
+    myTalon.set(ControlMode.PercentOutput, myJoystick.getY());
+
+    SmartDashboard.putString("DB/String 0", "Position: " + Integer.toString(myTalon.getSelectedSensorPosition()));
+    SmartDashboard.putString("DB/String 1",  "Speed: " + Double.toString(myTalon.get()));
+
+
+
   }
 
   /**

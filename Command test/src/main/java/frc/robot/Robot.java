@@ -19,6 +19,7 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commands.DriveToDistanceCommand;
 import frc.robot.subsystems.ArmSubsystem;
 
@@ -34,6 +35,8 @@ public class Robot extends TimedRobot {
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static ArmSubsystem armSubsystem = new ArmSubsystem();
+  public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+
   public static OI m_oi;
 
   Command m_autonomousCommand;
@@ -98,7 +101,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
 
-    DriverStation.reportWarning("THIS IS A TEST MESSAGE", false);
+    
 
     
     /*

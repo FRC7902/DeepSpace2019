@@ -24,11 +24,16 @@ public class ArmSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  
 
   public void moveArm(Joystick joystick, double speed) {
     myTalon.set(ControlMode.PercentOutput, joystick.getY()*speed);
-    
+
+    if(getArmPosition() >= 4000 ){//will need to be adjusted
+      myTalon.set(ControlMode.PercentOutput, 0.1);
+    }else if(getArmPosition() <= 10){
+      myTalon.set(ControlMode.PercentOutput, 0.1);
+    }
+
   }
 
   public void stopArm(){
@@ -36,14 +41,52 @@ public class ArmSubsystem extends Subsystem {
   }
 
   public int getArmPosition(){
-    return myTalon.getSelectedSensorPosition();
+    return myTalon.getSelectedSensorPosition() % 4096;
 
   }
 
   public int getArmVelocity(){
     return myTalon.getSelectedSensorVelocity();
   }
-  
+
+
+  public void setPreset(int position){
+
+    int desPosition = 0;
+    switch (position) {//will need to be set to arbitrary numbers
+      case 1://lowest cargo
+        desPosition = 1;
+      case 2://middle cargo
+        desPosition = 1;
+      case 3://highest cargo
+        desPosition = 1;
+      case 4://lowest hatch
+        desPosition = 1;
+      case 5://middle hatch
+        desPosition = 1;
+      case 6://highest hatch
+        desPosition = 1;
+      case 7://lowest back hatch
+        desPosition = 1;
+      case 8://middle back hatch
+        desPosition = 1;  
+      case 9://highest back hatch
+        desPosition = 1;
+      case 10://lowest back cargo
+        desPosition = 1;
+      case 11://middle back cargo
+        desPosition = 1;
+      case 12://highest back cargo
+        desPosition = 1;
+      case 13://ground position
+        desPosition = 1;
+    }
+
+    int currPosition = getArmPosition();
+
+    
+
+  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

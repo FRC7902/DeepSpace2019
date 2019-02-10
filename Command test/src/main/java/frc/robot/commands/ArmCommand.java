@@ -7,29 +7,31 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.subsystems.ArmSubsystem;
 
-public class IntakeCommand extends Command {
-
-  
-  public IntakeCommand() {
+public class ArmCommand extends Command {
+  public ArmCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.intakeSubsystem);
+    requires (Robot.armSubsystem);
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.intakeSubsystem.stopIntake();
+    Robot.armSubsystem.stopArm();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //the right trigger - the left trigger
-    Robot.intakeSubsystem.moveIntake(Robot.m_oi.getOperatorStick().getRawAxis(4),Robot.m_oi.getOperatorStick().getRawAxis(5));
+    Robot.armSubsystem.moveArm(Robot.m_oi.getOperatorStick(), 1);
+    SmartDashboard.putString("DB/String 0", "Arm: " + Robot.armSubsystem.getArmPosition());
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -47,5 +49,6 @@ public class IntakeCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

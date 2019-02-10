@@ -10,42 +10,40 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class IntakeCommand extends Command {
-
-  
-  public IntakeCommand() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.intakeSubsystem);
+public class DriveCommand extends Command {
+  public DriveCommand() {
+    
   }
-
+  
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.intakeSubsystem.stopIntake();
+    Robot.driveSubsystem.stop();//stops the motors (resets them)
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //the right trigger - the left trigger
-    Robot.intakeSubsystem.moveIntake(Robot.m_oi.getOperatorStick().getRawAxis(4),Robot.m_oi.getOperatorStick().getRawAxis(5));
+    Robot.driveSubsystem.driveJoystick(Robot.m_oi.getDriverStick(), 1);
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return false; //never finished
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.driveSubsystem.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

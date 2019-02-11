@@ -46,7 +46,7 @@ public class Robot extends TimedRobot {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 
-  public static TeleOp armAndDrive = new TeleOp();
+  public static TeleOp teleOp = new TeleOp();
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
 
-    DriverStation.reportWarning("THIS IS A TEST MESSAGE", false);
+    
 
     
     /*
@@ -132,7 +132,7 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     //armAndDrive.start();
-    driveCommand.start();
+    teleOp.start();
 
 
 

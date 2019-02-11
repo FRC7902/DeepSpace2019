@@ -49,8 +49,11 @@ public class ArmSubsystem extends Subsystem {
     return myTalon.getSelectedSensorVelocity();
   }
 
+  public void setArmPosition(int desPosition){
+    //to be filled by code from Experimental
+  }
 
-  public void setPreset(int position){
+  public int setPreset(int position){
 
     int desPosition = 0;
     switch (position) {//will need to be set to arbitrary numbers
@@ -81,11 +84,16 @@ public class ArmSubsystem extends Subsystem {
       case 13://ground position
         desPosition = 1;
     }
-
-    int currPosition = getArmPosition();
+    return desPosition;
 
     
 
+  }
+
+  public int parallelMode(){
+    int armPos = myTalon.getSelectedSensorPosition();
+    int desWristPos = 4096-armPos;
+    return desWristPos;
   }
   @Override
   public void initDefaultCommand() {

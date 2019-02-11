@@ -7,10 +7,8 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -29,7 +27,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class Robot extends TimedRobot {
   WPI_TalonSRX myTalon = new WPI_TalonSRX(5);
   Joystick myJoystick = new Joystick(0);
-  public final int desPosition = 400;
+  public final int desPosition = 0;
 
   
   
@@ -92,11 +90,26 @@ public class Robot extends TimedRobot {
 
     
     //Constants
-    myTalon.set(ControlMode.PercentOutput, myJoystick.getY());
-
+    if(!myJoystick.getRawButton(6)){
+      myTalon.set(ControlMode.PercentOutput, myJoystick.getY());
+    }
     SmartDashboard.putString("DB/String 0", "Position: " + Integer.toString(myTalon.getSelectedSensorPosition()));
-    SmartDashboard.putString("DB/String 1",  "Speed: " + Double.toString(myTalon.get()));
+    SmartDashboard.putString("DB/String 1",  "Speed: " + Double.toString(myTalon.getSelectedSensorVelocity()));
 
+    
+    if(myJoystick.getRawButton(6)){
+      //Phase 1
+      if(myTalon.getSelectedSensorPosition() >= (4096/2)+desPosition){
+        myTalon.set(ControlMode.PercentOutput, 0.01);
+      }else{
+        myTalon.set(ControlMode.PercentOutput, -0.01);
+      }
+
+    
+
+
+
+    }
 
 
   }

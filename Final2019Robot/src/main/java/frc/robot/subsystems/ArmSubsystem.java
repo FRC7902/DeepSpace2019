@@ -100,6 +100,8 @@ public class ArmSubsystem extends Subsystem {
         desWristPos = 3072 - armPos;
       }
 
+    }else{//other stuff
+      
     }
     
     return desWristPos;

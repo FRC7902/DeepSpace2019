@@ -89,10 +89,19 @@ public class ArmSubsystem extends Subsystem {
     
 
   }
-
-  public int parallelMode(){
+  //1024 2048 3072 4096
+  public int parallelMode(){ //to be run constantly
     int armPos = myTalon.getSelectedSensorPosition();
-    int desWristPos = 4096-armPos;
+    int desWristPos = 0;
+    if(armPos > 512 && armPos < 3584){//in the lower section
+      if(armPos > 512 && armPos < 2048){//on the right side
+        desWristPos = 1024 - armPos;
+      }else{//on the left side
+        desWristPos = 3072 - armPos;
+      }
+
+    }
+    
     return desWristPos;
   }
   @Override

@@ -27,7 +27,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class Robot extends TimedRobot {
   WPI_TalonSRX myTalon = new WPI_TalonSRX(5);
   Joystick myJoystick = new Joystick(0);
-  public final int desPosition = 0;
+  public final int desPosition = 2048;
 
   
   
@@ -86,7 +86,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     
-
+    double speed = 1;
 
     
     //Constants
@@ -105,6 +105,10 @@ public class Robot extends TimedRobot {
         myTalon.set(ControlMode.PercentOutput, -0.01);
       }
 
+      //Phase 2
+      if(myTalon.getSelectedSensorPosition() + myTalon.getSelectedSensorVelocity()*35 == desPosition){
+        myTalon.set(ControlMode.PercentOutput, 0);
+      }
     
 
 

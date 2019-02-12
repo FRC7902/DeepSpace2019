@@ -38,6 +38,7 @@
 # Compiled class file
 *.class
 /bin
+bin/
 
 # Log file
 *.log

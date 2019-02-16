@@ -28,9 +28,9 @@ public class IntakeSubsystem extends Subsystem {
 
   }
 
-  public void moveIntake(double trig1, double trig2){
-    topMotor.set(trig1-trig2);
-    bottomMotor.set(trig1-trig2);
+  public void moveIntake(double trig1, double trig2, double speed){
+    topMotor.set((trig1-trig2)*speed);
+    bottomMotor.set((trig1-trig2)*speed);
   }
 
   public void stopIntake(){

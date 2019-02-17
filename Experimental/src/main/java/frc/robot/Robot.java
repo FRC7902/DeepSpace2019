@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -28,8 +29,8 @@ public class Robot extends TimedRobot {
   WPI_TalonSRX myTalon = new WPI_TalonSRX(5);
   Joystick myJoystick = new Joystick(0);
   public final int desPosition = 2048;
-
-  
+  Timer timer = new Timer();
+  boolean flipflop = false;
   
   @Override
   public void robotInit() {
@@ -96,7 +97,21 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("DB/String 0", "Position: " + Integer.toString(myTalon.getSelectedSensorPosition()));
     SmartDashboard.putString("DB/String 1",  "Speed: " + Double.toString(myTalon.getSelectedSensorVelocity()));
 
-    
+    //Testing the timer
+    if(myJoystick.getRawButton(8)){
+      if(flipflop == false){//if just switched over
+        timer.start();
+      }
+      SmartDashboard.putString("DB/String 2",  Double.toString(timer.get()));
+      flipflop = true;
+    }else{
+      if(flipflop == true){
+        timer.stop();
+      }
+      flipflop = false;
+    }
+
+
     if(myJoystick.getRawButton(6)){
       //Phase 1
       if(myTalon.getSelectedSensorPosition() >= (4096/2)+desPosition){
@@ -109,7 +124,7 @@ public class Robot extends TimedRobot {
       if(myTalon.getSelectedSensorPosition() + myTalon.getSelectedSensorVelocity()*35 == desPosition){
         myTalon.set(ControlMode.PercentOutput, 0);
       }
-    //s
+    
 
 
 

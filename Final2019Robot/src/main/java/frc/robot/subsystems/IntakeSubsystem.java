@@ -40,8 +40,8 @@ public class IntakeSubsystem extends Subsystem {
         timer.start();//start the timer
       }
       if(timer.get() >= 180){//if past the delay
-        topMotor.set((0-trig2)*speed);
-        bottomMotor.set((0-trig2)*speed);
+        topMotor.set((-trig2)*speed);
+        bottomMotor.set((-trig2)*speed);
       }
       delayLimSwitch = true;
     }else{//if limit switch is not pressed

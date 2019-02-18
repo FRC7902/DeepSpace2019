@@ -26,9 +26,9 @@ public class WristSubsystem extends Subsystem {
   public void moveWrist(Joystick joystick, double speed){
     myTalon.set(ControlMode.PercentOutput, joystick.getRawAxis(5));
 
-    if(getWristPosition() >= 4000 ){//will need to be adjusted
-      myTalon.set(ControlMode.PercentOutput, 0.1);
-    }else if(getWristPosition() <= 10){
+    if(getWristPosition() >= 0 ){//will need to be adjusted
+      myTalon.set(ControlMode.PercentOutput, -0.1);
+    }else if(getWristPosition() <= 2048){
       myTalon.set(ControlMode.PercentOutput, 0.1);
     }
   }
@@ -50,6 +50,20 @@ public class WristSubsystem extends Subsystem {
     //to be filled by code from Experimental
   }
   
+  public int setPreset(int position){
+
+    int desPosition = 0;
+    switch (position) {//will need to be set to arbitrary numbers
+      case 1://lowest cargo
+        desPosition = 1;
+      case 2://middle cargo
+        desPosition = 1;
+      case 3://highest cargo
+        desPosition = 1;
+    }
+    return desPosition;
+
+  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

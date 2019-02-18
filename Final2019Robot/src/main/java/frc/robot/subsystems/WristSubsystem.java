@@ -26,9 +26,28 @@ public class WristSubsystem extends Subsystem {
   public void moveWrist(Joystick joystick, double speed){
     myTalon.set(ControlMode.PercentOutput, joystick.getRawAxis(5));
 
-    if(getWristPosition() >= 0 ){//will need to be adjusted
+    checkOutOfRange();
+  }
+
+  public void checkOutOfRange(){
+    if(getWristPosition() > 0) {//example to be changed later
+      //Phase 1
+      //stopWrist();
+      //Phase 2
+      //myTalon.set(ControlMode.PercentOutput, 0);
+      //Phase 3
+      //move arm outside of limit using setArmPosition
+      //Phase 4
       myTalon.set(ControlMode.PercentOutput, -0.1);
-    }else if(getWristPosition() <= 2048){
+      
+    }else if (getWristPosition() < 2048){
+      //Phase 1
+      //stopWrist();
+      //Phase 2
+      //myTalon.set(ControlMode.PercentOutput, 0);
+      //Phase 3
+      //move arm outside of limit using setArmPosition
+      //Phase 4
       myTalon.set(ControlMode.PercentOutput, 0.1);
     }
   }

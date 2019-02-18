@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
   
 /**
@@ -35,6 +36,7 @@ public class IntakeSubsystem extends Subsystem {
   }
 
   public void moveIntake(double trig1, double trig2, double speed){
+
     if(limitSwitch.get()){//if limit switch is pressed
       if(delayLimSwitch == false){//the instance the switch is flipped
         timer.start();//start the timer
@@ -45,8 +47,10 @@ public class IntakeSubsystem extends Subsystem {
       }
       delayLimSwitch = true;
     }else{//if limit switch is not pressed
-      topMotor.set((trig1-trig2)*speed);
-      bottomMotor.set((trig1-trig2)*speed);
+      if(Robot.m_oi.getOperatorStick().getRawButton(2)){
+        topMotor.set((trig1)*speed);
+        bottomMotor.set((trig1)*speed);
+      }
       delayLimSwitch = false;
     }
   }

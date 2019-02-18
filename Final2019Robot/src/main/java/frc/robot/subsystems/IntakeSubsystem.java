@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -19,7 +21,11 @@ public class IntakeSubsystem extends Subsystem {
   // here. Call these from Commands.
   Victor topMotor = new Victor(RobotMap.intakeTop);
   Victor bottomMotor = new Victor(RobotMap.intakeBottom);
-  
+  DigitalInput limitSwitch = new DigitalInput(1);//channel 1
+  Timer timer = new Timer();
+
+  boolean delayLimSwitch = false;
+
   public IntakeSubsystem(){
 
     //will have to adjust
@@ -28,9 +34,21 @@ public class IntakeSubsystem extends Subsystem {
 
   }
 
-  public void moveIntake(double trig1, double trig2){
-    topMotor.set(trig1-trig2);
-    bottomMotor.set(trig1-trig2);
+  public void moveIntake(double trig1, double trig2, double speed){
+    if(limitSwitch.get()){//if limit switch is pressed
+      if(delayLimSwitch == false){//the instance the switch is flipped
+        timer.start();//start the timer
+      }
+      if(timer.get() >= 180){//if past the delay
+        topMotor.set((0-trig2)*speed);
+        bottomMotor.set((0-trig2)*speed);
+      }
+      delayLimSwitch = true;
+    }else{//if limit switch is not pressed
+      topMotor.set((trig1-trig2)*speed);
+      bottomMotor.set((trig1-trig2)*speed);
+      delayLimSwitch = false;
+    }
   }
 
   public void stopIntake(){

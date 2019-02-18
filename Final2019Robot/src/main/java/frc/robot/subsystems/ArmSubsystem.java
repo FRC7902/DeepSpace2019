@@ -28,12 +28,38 @@ public class ArmSubsystem extends Subsystem {
   public void moveArm(Joystick joystick, double speed) {
     myTalon.set(ControlMode.PercentOutput, joystick.getY()*speed);
 
+    checkOutOfRange();
+
+    /*
     if(getArmPosition() >= 4000 ){//will need to be adjusted
       myTalon.set(ControlMode.PercentOutput, 0.1);
     }else if(getArmPosition() <= 10){
       myTalon.set(ControlMode.PercentOutput, 0.1);
     }
+    */
+  }
 
+  public void checkOutOfRange(){
+    if(getArmPosition() > 3072) {//example to be changed later
+      //Phase 1
+      stopArm();
+      //Phase 2
+      myTalon.set(ControlMode.PercentOutput, 0);
+      //Phase 3
+      //move arm outside of limit using setArmPosition
+      //Phase 4
+      myTalon.set(ControlMode.PercentOutput, -0.1);
+      
+    }else if (getArmPosition() < 1024){
+      //Phase 1
+      stopArm();
+      //Phase 2
+      myTalon.set(ControlMode.PercentOutput, 0);
+      //Phase 3
+      //move arm outside of limit using setArmPosition
+      //Phase 4
+      myTalon.set(ControlMode.PercentOutput, 0.1);
+    }
   }
 
   public void stopArm(){
@@ -49,8 +75,11 @@ public class ArmSubsystem extends Subsystem {
     return myTalon.getSelectedSensorVelocity();
   }
 
+  public void setArmPosition(int desPosition){
+    //to be filled by code from Experimental
+  }
 
-  public void setPreset(int position){
+  public int setPreset(int position){
 
     int desPosition = 0;
     switch (position) {//will need to be set to arbitrary numbers
@@ -81,11 +110,27 @@ public class ArmSubsystem extends Subsystem {
       case 13://ground position
         desPosition = 1;
     }
-
-    int currPosition = getArmPosition();
+    return desPosition;
 
     
 
+  }
+  //1024 2048 3072 4096
+  public int parallelMode(){ //to be run constantly
+    int armPos = myTalon.getSelectedSensorPosition();
+    int desWristPos = 0;
+    if(armPos > 512 && armPos < 3584){//in the lower section
+      if(armPos > 512 && armPos < 2048){//on the right side
+        desWristPos = 1024 - armPos;
+      }else{//on the left side
+        desWristPos = 3072 - armPos;
+      }
+
+    }else{//other stuff
+      
+    }
+    
+    return desWristPos;
   }
   @Override
   public void initDefaultCommand() {

@@ -1,38 +1,80 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
+/**
+ * For Monday, February 18, 2019
+ * WHAT IS IN THIS CODE
+ * 1. Testing the timer
+ *    Pressing button #8 will start the timer, and as long as the button is help, the timer will count up and display in the DriverStation
+ *    When you release the button, the timer should stop.
+ *    This component is important because we need the timer to work for the intake
+ *    INFO WE NEED: How long an acceptable time is to delay the intake. Retrieve the value from the timer.
+ * 
+ * 2. Testing moving the arm to a designated position
+ *    Currently, we have a variable called desPosition with a value of 0. When button #6 is pressed, that will move the arm to 0
+ *    This may have some kinks, so please add more phases and try to work it out. 
+ *    When changing phases, comment out all other phases so that they don't conflict.
+ *    INFO WE NEED: A phase that moves the arm quickly, and doesn't go outside the arm limits.
+ * 
+ * 3. Testing the arm limits
+ *    Obviously the arm cannot spin 360 degrees around. It is going to hit the robot. So we need to implement a safety mechanism.
+ *    Right now the arm's limit is 180. From 90 to -90. This is obviously not the real limit.
+ *    PLEASE BEFORE YOU TEST THE DESIGNATED ARM CODE, PLEASE CHECK THE ARM LIMITS. THE FORMER IS ALREADY COMMENT OUT FOR YOU.
+ *    After you have adjusted the limit to the real limits, then you can start running arm designation tests.
+ *    
+ *    Please keep in mind that the arm designation tests may conflict(as in the arm will try to move out of the limit to reach a position).
+ *    As mentioned, please try to work it out.
+ *    INFO WE NEED: Values that accurately reflect what the real robot arm limits are.
+ * 
+ */
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.gradle file in the
- * project.
- */
-
 
 public class Robot extends TimedRobot {
   WPI_TalonSRX myTalon = new WPI_TalonSRX(5);
   Joystick myJoystick = new Joystick(0);
-  public final int desPosition = 400;
+  public final int desPosition = 0;
+  Timer timer = new Timer();
+  boolean flipflop = false;
+  
+  public void stopArm(){
+    myTalon.disable();
+  }
 
+  public int getArmPosition(){
+    return myTalon.getSelectedSensorPosition() % 4096;
+
+  }
   
-  
+  public void checkOutOfRange(){
+    if(getArmPosition() > 3072) {//example to be changed later
+      //Phase 1
+      stopArm();
+      //Phase 2
+      myTalon.set(ControlMode.PercentOutput, 0);
+      //Phase 3
+      //move arm outside of limit using setArmPosition
+      //Phase 4
+      myTalon.set(ControlMode.PercentOutput, -0.1);
+      
+    }else if (getArmPosition() < 1024){
+      //Phase 1
+      stopArm();
+      //Phase 2
+      myTalon.set(ControlMode.PercentOutput, 0);
+      //Phase 3
+      //move arm outside of limit using setArmPosition
+      //Phase 4
+      myTalon.set(ControlMode.PercentOutput, 0.1);
+    }
+  }
+
   @Override
   public void robotInit() {
     myTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
@@ -88,19 +130,55 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     
-
+    double speed = 1;
 
     
     //Constants
-    myTalon.set(ControlMode.PercentOutput, myJoystick.getY());
-
+    if(!myJoystick.getRawButton(6)){
+      myTalon.set(ControlMode.PercentOutput, myJoystick.getY());
+    }
     SmartDashboard.putString("DB/String 0", "Position: " + Integer.toString(myTalon.getSelectedSensorPosition()));
-    SmartDashboard.putString("DB/String 1",  "Speed: " + Double.toString(myTalon.get()));
+    SmartDashboard.putString("DB/String 1",  "Speed: " + Double.toString(myTalon.getSelectedSensorVelocity()));
+
+    //Testing the timer
+    if(myJoystick.getRawButton(8)){
+      if(flipflop == false){//if just switched over
+        timer.start();
+      }
+      SmartDashboard.putString("DB/String 2",  Double.toString(timer.get()));
+      flipflop = true;
+    }else{
+      if(flipflop == true){
+        timer.stop();
+        timer.reset();
+      }
+      flipflop = false;
+    }
+
+
+    if(myJoystick.getRawButton(6)){
+      //Phase 1
+      /*
+      if(myTalon.getSelectedSensorPosition() >= (4096/2)+desPosition){
+        myTalon.set(ControlMode.PercentOutput, 0.01);
+      }else{
+        myTalon.set(ControlMode.PercentOutput, -0.01);
+      }
+      */
+      //Phase 2
+      /*
+      if(myTalon.getSelectedSensorPosition() + myTalon.getSelectedSensorVelocity()*35 == desPosition){
+        myTalon.set(ControlMode.PercentOutput, 0);
+      }
+      */
 
 
 
+    }
+
+    checkOutOfRange();
   }
-
+  
   /**
    * This function is called periodically during test mode.
    */

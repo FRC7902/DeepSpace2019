@@ -51,6 +51,8 @@ public class IntakeSubsystem extends Subsystem {
     }
   }
 
+  
+
   public void stopIntake(){
     topMotor.stopMotor();
     bottomMotor.stopMotor();

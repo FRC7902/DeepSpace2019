@@ -23,7 +23,7 @@ public class WristSubsystem extends Subsystem {
   // here. Call these from Commands.
   WPI_TalonSRX myTalon = new WPI_TalonSRX(RobotMap.wristMotor);
 
-  public void moveArm(Joystick joystick, double speed){
+  public void moveWrist(Joystick joystick, double speed){
     myTalon.set(ControlMode.PercentOutput, joystick.getRawAxis(5));
 
     if(getWristPosition() >= 4000 ){//will need to be adjusted
@@ -42,7 +42,13 @@ public class WristSubsystem extends Subsystem {
 
   }
 
+  public int getWristVelocity(){
+    return myTalon.getSelectedSensorVelocity();
+  }
   
+  public void setWristPosition(int desPosition){
+    //to be filled by code from Experimental
+  }
   
   @Override
   public void initDefaultCommand() {

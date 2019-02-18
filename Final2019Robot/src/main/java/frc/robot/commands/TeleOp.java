@@ -9,11 +9,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ArmAndDrive extends CommandGroup {
+public class TeleOp extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public ArmAndDrive() {
+  public TeleOp() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -21,6 +21,7 @@ public class ArmAndDrive extends CommandGroup {
     
     addParallel(new DriveCommand());
     addParallel(new ArmCommand());
+    addParallel(new IntakeCommand());
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());

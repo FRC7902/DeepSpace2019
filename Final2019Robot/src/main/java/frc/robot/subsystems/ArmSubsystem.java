@@ -60,26 +60,6 @@ public class ArmSubsystem extends Subsystem {
         desPosition = 1;
       case 3://highest cargo
         desPosition = 1;
-      case 4://lowest hatch
-        desPosition = 1;
-      case 5://middle hatch
-        desPosition = 1;
-      case 6://highest hatch
-        desPosition = 1;
-      case 7://lowest back hatch
-        desPosition = 1;
-      case 8://middle back hatch
-        desPosition = 1;  
-      case 9://highest back hatch
-        desPosition = 1;
-      case 10://lowest back cargo
-        desPosition = 1;
-      case 11://middle back cargo
-        desPosition = 1;
-      case 12://highest back cargo
-        desPosition = 1;
-      case 13://ground position
-        desPosition = 1;
     }
 
     int currPosition = getArmPosition();

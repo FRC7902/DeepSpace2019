@@ -25,7 +25,7 @@ public class WristSubsystem extends Subsystem {
 
   public void moveWrist(Joystick joystick, double speed){//the method on how to move the wrist
     myTalon.set(ControlMode.PercentOutput, joystick.getRawAxis(5));//the second joystick's Y-axis is the motor
-
+    
     checkOutOfRange();//always make sure it is in range
   }
 
@@ -67,13 +67,19 @@ public class WristSubsystem extends Subsystem {
   }
   
   public void setWristPosition(int desPosition){//to move the desired position
-    if(myTalon.getSelectedSensorPosition() > desPosition){//if the arm is too forward, move it back
+    if(getWristPosition() > desPosition){//if the arm is too forward, move it back
       myTalon.set(ControlMode.PercentOutput, -0.01);
-    }else if(myTalon.getSelectedSensorPosition() < desPosition){
+    }else if(getWristPosition() < desPosition){
       myTalon.set(ControlMode.PercentOutput, 0.01);//otherwise move it forward
     }
   }
   
+  public double deccelerate(Joystick joystick){
+    double outputSpeed = 0;
+    outputSpeed = (getWristVelocity()+joystick.getRawAxis(5))/100;
+    return outputSpeed;
+  }
+
   public int setPreset(int position){
 
     int desPosition = 0;

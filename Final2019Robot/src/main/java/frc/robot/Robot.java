@@ -14,14 +14,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.commands.TeleOp;
-import frc.robot.commands.ArmCommand;
+import frc.robot.commands.WristCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.WristSubsystem;
 import frc.robot.commands.DriveToDistanceCommand;
-import frc.robot.subsystems.ArmSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,14 +34,14 @@ public class Robot extends TimedRobot {
 
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
-  public static ArmSubsystem armSubsystem = new ArmSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  public static WristSubsystem wristSubsystem = new WristSubsystem();
   public static OI m_oi;
 
   Command m_autonomousCommand;
   Command driveCommand = new DriveCommand();
   Command driveToDistanceCommand = new DriveToDistanceCommand(5, .5);
-  Command armCommand = new ArmCommand();
+  Command wristCommand = new WristCommand();
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 

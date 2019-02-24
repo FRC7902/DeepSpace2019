@@ -20,7 +20,7 @@ public class TeleOp extends CommandGroup {
     // these will run in order.
     
     addParallel(new DriveCommand());
-    addParallel(new ArmCommand());
+    addParallel(new WristCommand());
     addParallel(new IntakeCommand());
     // To run multiple commands at the same time,
     // use addParallel()

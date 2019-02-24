@@ -23,27 +23,67 @@ public class WristSubsystem extends Subsystem {
   // here. Call these from Commands.
   WPI_TalonSRX myTalon = new WPI_TalonSRX(RobotMap.wristMotor);
 
-  public void moveArm(Joystick joystick, double speed){
-    myTalon.set(ControlMode.PercentOutput, joystick.getRawAxis(5));
+  public void moveWrist(Joystick joystick, double speed){//the method on how to move the wrist
+    myTalon.set(ControlMode.PercentOutput, joystick.getRawAxis(5));//the second joystick's Y-axis is the motor
 
-    if(getWristPosition() >= 4000 ){//will need to be adjusted
-      myTalon.set(ControlMode.PercentOutput, 0.1);
-    }else if(getWristPosition() <= 10){
-      myTalon.set(ControlMode.PercentOutput, 0.1);
+    checkOutOfRange();//always make sure it is in range
+  }
+
+  public void checkOutOfRange(){
+
+    if(getWristPosition() > 0) {//if the position is greater than 0 (or too forward)
+      //Phase 1
+      //stopWrist();
+      //Phase 2
+      //myTalon.set(ControlMode.PercentOutput, 0);
+      //Phase 3
+      //move arm outside of limit using setArmPosition
+      //Phase 4
+      myTalon.set(ControlMode.PercentOutput, -0.1);//move it back
+      
+    }else if (getWristPosition() < 2048){//if the position is less that 0(or too back)
+      //Phase 1
+      //stopWrist();
+      //Phase 2
+      //myTalon.set(ControlMode.PercentOutput, 0);
+      //Phase 3
+      //move arm outside of limit using setArmPosition
+      //Phase 4
+      myTalon.set(ControlMode.PercentOutput, 0.1);//move it forward
     }
   }
 
-  public void stopWrist(){
+  public void stopWrist(){//disable the wrist
     myTalon.disable();
   }
 
-  public int getWristPosition(){
+  public int getWristPosition(){//get the position
     return myTalon.getSelectedSensorPosition() % 4096;
 
   }
 
+  public int getWristVelocity(){//get the velocity
+    return myTalon.getSelectedSensorVelocity();
+  }
   
+  public void setWristPosition(int desPosition){//to move the desired position
+    //to be filled by code from Experimental
+  }
   
+  public int setPreset(int position){
+
+    int desPosition = 0;
+    switch (position) {//will need to be set to arbitrary numbers
+      case 1://lowest cargo
+        desPosition = 1;
+      case 2://middle cargo
+        desPosition = 1;
+      case 3://highest cargo
+        desPosition = 1;
+    }
+    return desPosition;
+
+  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

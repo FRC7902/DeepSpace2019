@@ -77,20 +77,22 @@ public class DriveSubsystem extends Subsystem {
     }
 
     // if (joystick.getY() == 0) {// when you want the robot to stop
-    //   averagePower = RobotMap.findTheAverage(motorHist); // find the average power of the motorHist
-    //   brakeTime = (int) Math.round(averagePower * RobotMap.brakeDurMult);// calculate the brakeTime
-    //   brake = true; // brake is now true
-    //   if (brake == true) { // when brake is true
-    //     yOut = -1 / (float) speed; // set yOut to -1 in the output
-    //     currbrakeTime++; // add one to currBrakeTime
+    // averagePower = RobotMap.findTheAverage(motorHist); // find the average power
+    // of the motorHist
+    // brakeTime = (int) Math.round(averagePower * RobotMap.brakeDurMult);//
+    // calculate the brakeTime
+    // brake = true; // brake is now true
+    // if (brake == true) { // when brake is true
+    // yOut = -1 / (float) speed; // set yOut to -1 in the output
+    // currbrakeTime++; // add one to currBrakeTime
 
-    //   }
-    //   if (currbrakeTime == brakeTime) {// when currBrakeTime has reached brakeTime
-    //     yOut = 0; // yOut is 0
-    //     brake = false; // brake is false
-    //     currbrakeTime = 0; // clean currBrakeTime
-    //     brakeTime = 0;// and brakeTime
-    //   }
+    // }
+    // if (currbrakeTime == brakeTime) {// when currBrakeTime has reached brakeTime
+    // yOut = 0; // yOut is 0
+    // brake = false; // brake is false
+    // currbrakeTime = 0; // clean currBrakeTime
+    // brakeTime = 0;// and brakeTime
+    // }
 
     // }
 
@@ -112,22 +114,3 @@ public class DriveSubsystem extends Subsystem {
 
   }
 }
-
-/*
- * public double getLeftRaw(){ return leftEnc.getRaw(); }
- * 
- * public double getRightRaw() { return rightEnc.getRaw(); }
- * 
- * public double getRawAvg() { return (leftEnc.getRaw() + rightEnc.getRaw()) /
- * 2; }
- * 
- * public double getAvgDistance() { return getRawAvg() * 0.0008; }
- * 
- * // Resets the encoders so that they read from 0 again public void encReset()
- * { leftEnc.reset(); rightEnc.reset(); }
- * 
- * @Override public void initDefaultCommand() { // Set the default command for a
- * subsystem here. // setDefaultCommand(new MySpecialCommand()); }
- * 
- * }
- */

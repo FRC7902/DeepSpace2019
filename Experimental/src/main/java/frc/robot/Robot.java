@@ -55,9 +55,9 @@ public class Robot extends TimedRobot {
   public void checkOutOfRange(){
     if(getArmPosition() > 3072) {//example to be changed later
       //Phase 1
-      stopArm();
+      //stopArm();
       //Phase 2
-      myTalon.set(ControlMode.PercentOutput, 0);
+      //myTalon.set(ControlMode.PercentOutput, 0);
       //Phase 3
       //move arm outside of limit using setArmPosition
       //Phase 4
@@ -65,9 +65,9 @@ public class Robot extends TimedRobot {
       
     }else if (getArmPosition() < 1024){
       //Phase 1
-      stopArm();
+      //stopArm();
       //Phase 2
-      myTalon.set(ControlMode.PercentOutput, 0);
+      //myTalon.set(ControlMode.PercentOutput, 0);
       //Phase 3
       //move arm outside of limit using setArmPosition
       //Phase 4
@@ -158,13 +158,13 @@ public class Robot extends TimedRobot {
 
     if(myJoystick.getRawButton(6)){
       //Phase 1
-      /*
+      
       if(myTalon.getSelectedSensorPosition() >= (4096/2)+desPosition){
         myTalon.set(ControlMode.PercentOutput, 0.01);
       }else{
         myTalon.set(ControlMode.PercentOutput, -0.01);
       }
-      */
+      
       //Phase 2
       /*
       if(myTalon.getSelectedSensorPosition() + myTalon.getSelectedSensorVelocity()*35 == desPosition){

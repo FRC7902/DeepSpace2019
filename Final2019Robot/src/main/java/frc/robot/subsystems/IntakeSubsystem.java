@@ -41,6 +41,10 @@ public class IntakeSubsystem extends Subsystem {
   public void moveIntake(double trig1, double trig2, double speed){//moves the intake in and out
 
     if(limitSwitch.get()){//if the ball is in the intake...
+
+      topMotor.set((-trig2)*speed);//trig2 now can eject the ball for the topMotor,
+      bottomMotor.set((-trig2)*speed);//and the bottom motor
+      /*
       if(delayLimSwitch == false){//the instance the switch is flipped
         timer.start();//start the timer
       }
@@ -48,13 +52,15 @@ public class IntakeSubsystem extends Subsystem {
         topMotor.set((-trig2)*speed);//trig2 now can eject the ball for the topMotor,
         bottomMotor.set((-trig2)*speed);//and the bottom motor
       }
+      
       delayLimSwitch = true;//repeately sets it to true
+      */
     }else{//if the ball is not in the intake...
       if(Robot.m_oi.getOperatorStick().getRawButton(2)){//only if the "B" is pressed
         topMotor.set((trig1)*speed);//then the ball can be ejected from trig1
         bottomMotor.set((trig1)*speed);
       }
-      delayLimSwitch = false;//repeately set it to false
+      //delayLimSwitch = false;//repeately set it to false
     }
   }
 

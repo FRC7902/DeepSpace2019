@@ -42,9 +42,9 @@ public class ArmSubsystem extends Subsystem {
   public void checkOutOfRange(){
     if(getArmPosition() > 3072) {//example to be changed later
       //Phase 1
-      stopArm();
+      //stopArm();
       //Phase 2
-      myTalon.set(ControlMode.PercentOutput, 0);
+      //myTalon.set(ControlMode.PercentOutput, 0);
       //Phase 3
       //move arm outside of limit using setArmPosition
       //Phase 4
@@ -52,9 +52,9 @@ public class ArmSubsystem extends Subsystem {
       
     }else if (getArmPosition() < 1024){
       //Phase 1
-      stopArm();
+      //stopArm();
       //Phase 2
-      myTalon.set(ControlMode.PercentOutput, 0);
+      //myTalon.set(ControlMode.PercentOutput, 0);
       //Phase 3
       //move arm outside of limit using setArmPosition
       //Phase 4
@@ -76,7 +76,11 @@ public class ArmSubsystem extends Subsystem {
   }
 
   public void setArmPosition(int desPosition){
-    //to be filled by code from Experimental
+    if(myTalon.getSelectedSensorPosition() >= (4096/2)+desPosition){
+      myTalon.set(ControlMode.PercentOutput, 0.01);
+    }else{
+      myTalon.set(ControlMode.PercentOutput, -0.01);
+    }
   }
 
   public int setPreset(int position){

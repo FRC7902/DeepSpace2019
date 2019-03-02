@@ -25,13 +25,13 @@ public class WristSubsystem extends Subsystem {
 
   public void moveWrist(Joystick joystick, double speed){//the method on how to move the wrist
     myTalon.set(ControlMode.PercentOutput, joystick.getRawAxis(5));//the second joystick's Y-axis is the motor
-
+    
     checkOutOfRange();//always make sure it is in range
   }
 
   public void checkOutOfRange(){
 
-    if(getWristPosition() > 0) {//if the position is greater than 0 (or too forward)
+    if(getWristPosition() > 1024) {//if the position is greater than 2045 (or too forward)
       //Phase 1
       //stopWrist();
       //Phase 2
@@ -39,9 +39,9 @@ public class WristSubsystem extends Subsystem {
       //Phase 3
       //move arm outside of limit using setArmPosition
       //Phase 4
-      myTalon.set(ControlMode.PercentOutput, -0.1);//move it back
+      myTalon.set(ControlMode.PercentOutput, -0.1);//move it back(counter clockwise)
       
-    }else if (getWristPosition() < 2048){//if the position is less that 0(or too back)
+    }else if (getWristPosition() < 4096){//if the position is less than 4096(or too back)
       //Phase 1
       //stopWrist();
       //Phase 2
@@ -67,19 +67,29 @@ public class WristSubsystem extends Subsystem {
   }
   
   public void setWristPosition(int desPosition){//to move the desired position
-    //to be filled by code from Experimental
+    if(getWristPosition() > desPosition){//if the arm is too forward, move it back
+      myTalon.set(ControlMode.PercentOutput, -0.01);
+    }else if(getWristPosition() < desPosition){
+      myTalon.set(ControlMode.PercentOutput, 0.01);//otherwise move it forward
+    }
   }
   
+  public double deccelerate(Joystick joystick){
+    double outputSpeed = 0;
+    outputSpeed = (getWristVelocity()+joystick.getRawAxis(5))/100;
+    return outputSpeed;
+  }
+
   public int setPreset(int position){
 
     int desPosition = 0;
     switch (position) {//will need to be set to arbitrary numbers
       case 1://lowest cargo
-        desPosition = 1;
+        desPosition = 1024;
       case 2://middle cargo
-        desPosition = 1;
+        desPosition = 512;
       case 3://highest cargo
-        desPosition = 1;
+        desPosition = 256;
     }
     return desPosition;
 

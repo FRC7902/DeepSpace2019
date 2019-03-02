@@ -131,7 +131,7 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     //armAndDrive.start();
-    teleOp.start();
+    teleOp.start();//run the main teleOp command group
 
 
 

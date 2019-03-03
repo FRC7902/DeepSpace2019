@@ -22,10 +22,16 @@ public class WristSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   WPI_TalonSRX myTalon = new WPI_TalonSRX(RobotMap.wristMotor);
+  WPI_TalonSRX myTalon2 = new WPI_TalonSRX(RobotMap.wristMotor2);
+
+  public WristSubsystem() {
+    myTalon2.setInverted(true);
+  }
+  
 
   public void moveWrist(Joystick joystick, double speed){//the method on how to move the wrist
     myTalon.set(ControlMode.PercentOutput, joystick.getRawAxis(5));//the second joystick's Y-axis is the motor
-    
+    myTalon2.set(ControlMode.PercentOutput, joystick.getRawAxis(5));
     checkOutOfRange();//always make sure it is in range
   }
 
@@ -40,6 +46,7 @@ public class WristSubsystem extends Subsystem {
       //move arm outside of limit using setArmPosition
       //Phase 4
       myTalon.set(ControlMode.PercentOutput, -0.1);//move it back(counter clockwise)
+      myTalon2.set(ControlMode.PercentOutput, -0.1);//move it back(counter clockwise)
       
     }else if (getWristPosition() < 4096){//if the position is less than 4096(or too back)
       //Phase 1
@@ -50,6 +57,7 @@ public class WristSubsystem extends Subsystem {
       //move arm outside of limit using setArmPosition
       //Phase 4
       myTalon.set(ControlMode.PercentOutput, 0.1);//move it forward
+      myTalon2.set(ControlMode.PercentOutput, 0.1);//move it forward
     }
   }
 
@@ -72,15 +80,19 @@ public class WristSubsystem extends Subsystem {
       int diff = desPosition - getWristPosition();
       if(diff>lim){
         myTalon.set(ControlMode.PercentOutput, -1);
+        myTalon2.set(ControlMode.PercentOutput, -1);
       }else{
         myTalon.set(ControlMode.PercentOutput, diff/lim);
+        myTalon2.set(ControlMode.PercentOutput, diff/lim);
       }
     }else if(getWristPosition() < desPosition){
       int diff = desPosition - getWristPosition();
       if(diff>lim){
         myTalon.set(ControlMode.PercentOutput, 1);
+        myTalon2.set(ControlMode.PercentOutput, 1);
       }else{
         myTalon.set(ControlMode.PercentOutput, diff/lim);//otherwise move it forward
+        myTalon2.set(ControlMode.PercentOutput, diff/lim);
       }
     }
   }

@@ -67,10 +67,21 @@ public class WristSubsystem extends Subsystem {
   }
   
   public void setWristPosition(int desPosition){//to move the desired position
+    int lim = 512;
     if(getWristPosition() > desPosition){//if the arm is too forward, move it back
-      myTalon.set(ControlMode.PercentOutput, -0.01);
+      int diff = desPosition - getWristPosition();
+      if(diff>lim){
+        myTalon.set(ControlMode.PercentOutput, -1);
+      }else{
+        myTalon.set(ControlMode.PercentOutput, diff/lim);
+      }
     }else if(getWristPosition() < desPosition){
-      myTalon.set(ControlMode.PercentOutput, 0.01);//otherwise move it forward
+      int diff = desPosition - getWristPosition();
+      if(diff>lim){
+        myTalon.set(ControlMode.PercentOutput, 1);
+      }else{
+        myTalon.set(ControlMode.PercentOutput, diff/lim);//otherwise move it forward
+      }
     }
   }
   

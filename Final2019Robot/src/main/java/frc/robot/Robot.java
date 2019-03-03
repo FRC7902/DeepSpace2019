@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_chooser.getSelected();
 
     
-
+    teleOp.start();//run the main teleOp command group
     
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",

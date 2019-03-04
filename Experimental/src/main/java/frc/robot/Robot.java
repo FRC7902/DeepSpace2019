@@ -37,43 +37,24 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
 public class Robot extends TimedRobot {
+
+  
   WPI_TalonSRX myTalon = new WPI_TalonSRX(5);
   Joystick myJoystick = new Joystick(0);
-  public final int desPosition = 0;
-  Timer timer = new Timer();
-  boolean flipflop = false;
   
-  public void stopArm(){
-    myTalon.disable();
-  }
-
-  public int getArmPosition(){
-    return myTalon.getSelectedSensorPosition() % 4096;
-
-  }
   
-  public void checkOutOfRange(){
-    if(getArmPosition() > 3072) {//example to be changed later
-      //Phase 1
-      //stopArm();
-      //Phase 2
-      //myTalon.set(ControlMode.PercentOutput, 0);
-      //Phase 3
-      //move arm outside of limit using setArmPosition
-      //Phase 4
-      myTalon.set(ControlMode.PercentOutput, -0.1);
-      
-    }else if (getArmPosition() < 1024){
-      //Phase 1
-      //stopArm();
-      //Phase 2
-      //myTalon.set(ControlMode.PercentOutput, 0);
-      //Phase 3
-      //move arm outside of limit using setArmPosition
-      //Phase 4
-      myTalon.set(ControlMode.PercentOutput, 0.1);
-    }
-  }
+  int targetPos = 512;
+  int lim = 256;
+  int error = 0;
+  //PID values
+  double p = 0;
+  double i = 0;
+  
+  double d = 0;
+
+  
+  //Output
+  double power = 0;
 
   @Override
   public void robotInit() {
@@ -129,54 +110,36 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    
-    double speed = 1;
 
-    
-    //Constants
-    if(!myJoystick.getRawButton(6)){
-      myTalon.set(ControlMode.PercentOutput, myJoystick.getY());
-    }
     SmartDashboard.putString("DB/String 0", "Position: " + Integer.toString(myTalon.getSelectedSensorPosition()));
-    SmartDashboard.putString("DB/String 1",  "Speed: " + Double.toString(myTalon.getSelectedSensorVelocity()));
-
-    //Testing the timer
-    if(myJoystick.getRawButton(8)){
-      if(flipflop == false){//if just switched over
-        timer.start();
-      }
-      SmartDashboard.putString("DB/String 2",  Double.toString(timer.get()));
-      flipflop = true;
-    }else{
-      if(flipflop == true){
-        timer.stop();
-        timer.reset();
-      }
-      flipflop = false;
-    }
+    SmartDashboard.putString("DB/String 1",  "Desired Position: " + Integer.toString(targetPos));
+    SmartDashboard.putString("DB/String 2",  "Current Power: " + Double.toString(power));
 
 
-    if(myJoystick.getRawButton(6)){
-      //Phase 1
-      
-      if(myTalon.getSelectedSensorPosition() >= (4096/2)+desPosition){
-        myTalon.set(ControlMode.PercentOutput, 0.01);
-      }else{
-        myTalon.set(ControlMode.PercentOutput, -0.01);
-      }
-      
-      //Phase 2
-      /*
-      if(myTalon.getSelectedSensorPosition() + myTalon.getSelectedSensorVelocity()*35 == desPosition){
-        myTalon.set(ControlMode.PercentOutput, 0);
-      }
-      */
+    //Phase 1
+    power = 1.2;
+
+    /*
+    //calculate error
+    error = targetPos - myTalon.getSelectedSensorPosition();
+
+    //P
+    p = error/lim;
+
+    //I
+    i = i + error/lim;
+
+    //D
+    
+    
+    
+    //Output
+    power = p + i + d;
+    */
+    myTalon.set(ControlMode.PercentOutput, power);
 
 
-
-    }
-
-    checkOutOfRange();
+    
   }
   
   /**

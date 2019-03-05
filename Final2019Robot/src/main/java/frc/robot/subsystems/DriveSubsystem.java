@@ -59,6 +59,8 @@ public class DriveSubsystem extends Subsystem {
   // this method is for Joystick driving
   public void driveJoystick(Joystick joystick, double speed) {
 
+    motorHist[0] = 0;
+    
     if (joystick.getY() > (double) yOut && joystick.getY() > 0.1) {// if joystict.getY is bigger than yOut and 0.1
       yOut = yOut + (float) joystick.getY() * 0.01f; // increment yOut by a bit of joystick.getY
       brake = false; // brake is set to false

@@ -1,9 +1,9 @@
 [
   {
-    "artifact": "frcJava",
+    "artifact": "frcJava (in project Final2019Robot)",
     "target": "roborio",
     "debugfile": "frcJava_roborio.debugconfig",
-    "project": "Command test",
+    "project": "Final2019Robot",
     "language": "java"
   }
 ]

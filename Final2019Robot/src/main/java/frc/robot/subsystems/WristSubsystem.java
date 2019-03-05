@@ -15,6 +15,7 @@ import frc.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+
 /**
  * Add your docs here.
  */
@@ -26,6 +27,20 @@ public class WristSubsystem extends Subsystem {
 
   public WristSubsystem() {
     myTalon2.setInverted(true);
+
+    int targetPos = 512;
+    int lim = 256;
+    int error = 0;
+    //PID values
+    double p = 0;
+    double i = 0;
+    
+    double d = 0;
+  
+    
+    //Output
+    double power = 0;
+
   }
   
 
@@ -75,6 +90,29 @@ public class WristSubsystem extends Subsystem {
   }
   
   public void setWristPosition(int desPosition){//to move the desired position
+    /*
+    
+
+    /*
+    //calculate error
+    error = targetPos - myTalon.getSelectedSensorPosition();
+
+    //P
+    p = error/lim;
+
+    //I
+    i = i + error/lim;
+
+    //D
+    
+    
+    
+    //Output
+    power = p + i + d;
+    
+    myTalon.set(ControlMode.PercentOutput, power);
+    */
+    
     int lim = 512;
     if(getWristPosition() > desPosition){//if the arm is too forward, move it back
       int diff = desPosition - getWristPosition();
@@ -95,6 +133,7 @@ public class WristSubsystem extends Subsystem {
         myTalon2.set(ControlMode.PercentOutput, diff/lim);
       }
     }
+    
   }
   
   public double deccelerate(Joystick joystick){

@@ -26,14 +26,8 @@ public class WristCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {//when the command is running
-    Robot.wristSubsystem.moveWrist(Robot.m_oi.getOperatorStick(), 1);//take the operator's stick and a speed of 1
-    if(Robot.m_oi.getOperatorStick().getRawButton(1)){//if "A" button is pressed
-      Robot.wristSubsystem.setWristPosition(Robot.wristSubsystem.setPreset(1));
-    }else if(Robot.m_oi.getOperatorStick().getRawButton(3)){//if "X" button is pressed
-      Robot.wristSubsystem.setWristPosition(Robot.wristSubsystem.setPreset(2));
-    }else if(Robot.m_oi.getOperatorStick().getRawButton(4)){//if "Y" button is pressed
-      Robot.wristSubsystem.setWristPosition(Robot.wristSubsystem.setPreset(3));
-    }
+    Robot.wristSubsystem.moveWrist(Robot.m_oi.getDriverStick(), 0.5);//take the operator's stick and a speed of 1
+    Robot.wristSubsystem.detectPresetButton();//constantly detect if button is pressed
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -29,7 +29,7 @@ public class IntakeCommand extends Command {
   @Override
   protected void execute() {
     //the right trigger - the left trigger
-    Robot.intakeSubsystem.moveIntake(Robot.m_oi.getOperatorStick().getRawAxis(3),Robot.m_oi.getOperatorStick().getRawAxis(2), 0.15);
+    Robot.intakeSubsystem.moveIntake(Robot.m_oi.getDriverStick().getRawAxis(3),Robot.m_oi.getDriverStick().getRawAxis(2), 0.15);
   }
 
   // Make this return true when this Command no longer needs to run execute()

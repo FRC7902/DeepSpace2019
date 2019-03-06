@@ -9,7 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -27,22 +27,11 @@ public class WristSubsystem extends Subsystem {
 
   public WristSubsystem() {
     myTalon2.setInverted(true);
-
-    int targetPos = 512;
-    int lim = 256;
-    int error = 0;
-    //PID values
-    double p = 0;
-    double i = 0;
+    myTalon.setInverted(false);
     
-    double d = 0;
-  
-    
-    //Output
-    double power = 0;
-
   }
   
+  double i = 0;
 
   public void moveWrist(Joystick joystick, double speed){//the method on how to move the wrist
     myTalon.set(ControlMode.PercentOutput, joystick.getRawAxis(5));//the second joystick's Y-axis is the motor
@@ -52,25 +41,13 @@ public class WristSubsystem extends Subsystem {
 
   public void checkOutOfRange(){
 
-    if(getWristPosition() > 1024) {//if the position is greater than 2045 (or too forward)
-      //Phase 1
-      //stopWrist();
-      //Phase 2
-      //myTalon.set(ControlMode.PercentOutput, 0);
-      //Phase 3
-      //move arm outside of limit using setArmPosition
-      //Phase 4
+    if(getWristPosition() > RobotMap.wristFrontLimit) {//if the wrist is more forward than the frontmost wrist position
+      
       myTalon.set(ControlMode.PercentOutput, -0.1);//move it back(counter clockwise)
       myTalon2.set(ControlMode.PercentOutput, -0.1);//move it back(counter clockwise)
       
-    }else if (getWristPosition() < 4096){//if the position is less than 4096(or too back)
-      //Phase 1
-      //stopWrist();
-      //Phase 2
-      //myTalon.set(ControlMode.PercentOutput, 0);
-      //Phase 3
-      //move arm outside of limit using setArmPosition
-      //Phase 4
+    }else if (getWristPosition() < RobotMap.wristBackLimit && getWristPosition() > RobotMap.wristBottomPos){//if the wrist is more back than the backmost wrist position
+      
       myTalon.set(ControlMode.PercentOutput, 0.1);//move it forward
       myTalon2.set(ControlMode.PercentOutput, 0.1);//move it forward
     }
@@ -85,77 +62,73 @@ public class WristSubsystem extends Subsystem {
 
   }
 
-  public int getWristVelocity(){//get the velocity
-    return myTalon.getSelectedSensorVelocity();
-  }
   
   public void setWristPosition(int desPosition){//to move the desired position
-    /*
-    
 
-    /*
+    
     //calculate error
-    error = targetPos - myTalon.getSelectedSensorPosition();
+    int error = 0;
+    if(getWristPosition() > RobotMap.wristBottomPos && getWristPosition() < 4096){
+      error = 4096-getWristPosition();
+      error += desPosition;
+    }else{
+      error = desPosition - getWristPosition();
+    }
+    
 
     //P
-    p = error/lim;
+    double p = error/RobotMap.PIDthreshold;
 
     //I
-    i = i + error/lim;
+    
+    i = i + error/4096;
 
     //D
-    
+    double d = 0;
     
     
     //Output
-    power = p + i + d;
+    double power = p + i + d;
     
-    myTalon.set(ControlMode.PercentOutput, power);
-    */
+    myTalon.set(ControlMode.PercentOutput, power);//in between -1 and 1
     
-    int lim = 512;
-    if(getWristPosition() > desPosition){//if the arm is too forward, move it back
-      int diff = desPosition - getWristPosition();
-      if(diff>lim){
-        myTalon.set(ControlMode.PercentOutput, -1);
-        myTalon2.set(ControlMode.PercentOutput, -1);
-      }else{
-        myTalon.set(ControlMode.PercentOutput, diff/lim);
-        myTalon2.set(ControlMode.PercentOutput, diff/lim);
-      }
-    }else if(getWristPosition() < desPosition){
-      int diff = desPosition - getWristPosition();
-      if(diff>lim){
-        myTalon.set(ControlMode.PercentOutput, 1);
-        myTalon2.set(ControlMode.PercentOutput, 1);
-      }else{
-        myTalon.set(ControlMode.PercentOutput, diff/lim);//otherwise move it forward
-        myTalon2.set(ControlMode.PercentOutput, diff/lim);
-      }
-    }
     
+    
+    //FOR A BACKUP
+    // if(getWristPosition() > desPosition){//if the arm is too forward, move it back
+          
+    //   int diff = desPosition - getWristPosition();
+    //   if(diff>lim){
+    //     myTalon.set(ControlMode.PercentOutput, -1);
+    //     myTalon2.set(ControlMode.PercentOutput, -1);
+    //   }else{
+    //     myTalon.set(ControlMode.PercentOutput, diff/lim);
+    //     myTalon2.set(ControlMode.PercentOutput, diff/lim);
+    //   }
+    // }else if(getWristPosition() < desPosition){
+    //   int diff = desPosition - getWristPosition();
+    //   if(diff>lim){
+    //     myTalon.set(ControlMode.PercentOutput, 1);
+    //     myTalon2.set(ControlMode.PercentOutput, 1);
+    //   }else{
+    //     myTalon.set(ControlMode.PercentOutput, diff/lim);//otherwise move it forward
+    //     myTalon2.set(ControlMode.PercentOutput, diff/lim);
+    //   }
+    // }
   }
   
-  public double deccelerate(Joystick joystick){
-    double outputSpeed = 0;
-    outputSpeed = (getWristVelocity()+joystick.getRawAxis(5))/100;
-    return outputSpeed;
-  }
 
-  public int setPreset(int position){
-
-    int desPosition = 0;
-    switch (position) {//will need to be set to arbitrary numbers
-      case 1://lowest cargo
-        desPosition = 1024;
-      case 2://middle cargo
-        desPosition = 512;
-      case 3://highest cargo
-        desPosition = 256;
+  public void detectPresetButton(){
+    if(Robot.m_oi.getDriverStick().getRawButton(1)){//if "A" button is pressed
+      setWristPosition(RobotMap.groundPos);
+    }else if(Robot.m_oi.getDriverStick().getRawButton(3)){//if "X" button is pressed
+      setWristPosition(RobotMap.lowPos);
+    }else if(Robot.m_oi.getDriverStick().getRawButton(4)){//if "Y" button is pressed
+      setWristPosition(RobotMap.midPos);
     }
-    return desPosition;
-
   }
+
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

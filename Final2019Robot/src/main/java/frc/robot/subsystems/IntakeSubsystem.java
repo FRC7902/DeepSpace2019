@@ -11,7 +11,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
@@ -26,9 +25,6 @@ public class IntakeSubsystem extends Subsystem {
   Victor topMotor = new Victor(RobotMap.intakeTop);
   Victor bottomMotor = new Victor(RobotMap.intakeBottom);
   DigitalInput limitSwitch = new DigitalInput(1);//channel 1
-  Timer timer = new Timer();
-
-  boolean delayLimSwitch = false;
 
   public IntakeSubsystem(){
 
@@ -44,23 +40,13 @@ public class IntakeSubsystem extends Subsystem {
 
       topMotor.set((-trig2)*speed);//trig2 now can eject the ball for the topMotor,
       bottomMotor.set((-trig2)*speed);//and the bottom motor
-      /*
-      if(delayLimSwitch == false){//the instance the switch is flipped
-        timer.start();//start the timer
-      }
-      if(timer.get() >= 180){//if past the delay...
-        topMotor.set((-trig2)*speed);//trig2 now can eject the ball for the topMotor,
-        bottomMotor.set((-trig2)*speed);//and the bottom motor
-      }
-      
-      delayLimSwitch = true;//repeately sets it to true
-      */
+
     }else{//if the ball is not in the intake...
-      if(Robot.m_oi.getOperatorStick().getRawButton(2)){//only if the "B" is pressed
+      if(Robot.m_oi.getDriverStick().getRawButton(2)){//only if the "B" is pressed
         topMotor.set((trig1)*speed);//then the ball can be ejected from trig1
         bottomMotor.set((trig1)*speed);
       }
-      //delayLimSwitch = false;//repeately set it to false
+      
     }
   }
 

@@ -7,33 +7,39 @@
 
 package frc.robot;
 
-/**
- * The RobotMap is a mapping from the ports sensors and actuators are wired into
- * to a variable name. This provides flexibility changing wiring, makes checking
- * the wiring easier and significantly reduces the number of magic numbers
- * floating around.
- */
 public class RobotMap {
-  // For example to map the left and right motors, you could define the
-  // following variables to use with your drivetrain subsystem.
-  // public static int leftMotor = 1;
-  // public static int rightMotor = 2;
  
   //CAN IDs for motor controller outputs
+  //Drive motors
   public static final int frontRight = 1;
   public static final int backRight = 2;
   public static final int frontLeft = 3;
   public static final int backLeft = 4;
-  public static final int armMotor = 5;
+
+  //wrist motors
   public static final int wristMotor = 5;
   public static final int wristMotor2 = 6;
+
+  //intake motors
   public static final int intakeTop = 7;
   public static final int intakeBottom = 8;
 
-  public static final int motorHistLen = 50;
-  public static final float brakeDurMult = 40;
-
   
+  //COMMAND CENTER
+
+  //Drive
+  public static final double driveStopRange = 0.1;//the area when the joystick is ineffective
+
+  //Wrist
+  public static final int wristBottomPos = 2048;
+  public static final int wristBackLimit = 0;//the backmost position the wrist can reach
+  public static final int wristFrontLimit = 1024;//the frontmost position the wrist can reach
+
+  public static final int PIDthreshold = 512;
+  
+  public static final int groundPos = 1024;
+  public static final int lowPos = 512;
+  public static final int midPos = 256;
 
   //a method for removing an element from an array
   public static float[] removeTheElement(float[] arr, int index){
@@ -55,16 +61,7 @@ public class RobotMap {
 
   }
 
-  //finding an average from array
- // public static float findTheAverage(float[] arr){
-   // float sum = 0;
+  
 
-    //for(int i = 0; i < arr.length; i++){
-      //sum = sum + arr[i];
-
-    //}
-    //sum = sum/arr.length;
-    //return sum;
-
-  }
+}
 

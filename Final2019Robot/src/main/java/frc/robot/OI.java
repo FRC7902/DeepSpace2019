@@ -15,14 +15,10 @@ import edu.wpi.first.wpilibj.Joystick;
 public class OI {
   
   Joystick driverStick = new Joystick(0);
-  Joystick operatorStick = new Joystick(1);
+
 
   public Joystick getDriverStick() {
     return driverStick;
-  }
-
-  public Joystick getOperatorStick() {
-    return operatorStick;
   }
 
   

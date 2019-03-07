@@ -32,6 +32,7 @@ public class WristSubsystem extends Subsystem {
   }
   
   double i = 0;
+  int time = 0;
 
   public void moveWrist(Joystick joystick, double speed){//the method on how to move the wrist
     myTalon.set(ControlMode.PercentOutput, joystick.getRawAxis(5));//the second joystick's Y-axis is the motor
@@ -80,15 +81,17 @@ public class WristSubsystem extends Subsystem {
     double p = error/RobotMap.PIDthreshold;
 
     //I
-    
-    i = i + error/4096;
+    i = i*time;
+    time++;
+    i = i + p;
+    i = i/time;
 
     //D
     double d = 0;
     
     
     //Output
-    double power = p + i + d;
+    double power = RobotMap.kP * p + RobotMap.kI * i + RobotMap.kD * d;
     
     myTalon.set(ControlMode.PercentOutput, power);//in between -1 and 1
     

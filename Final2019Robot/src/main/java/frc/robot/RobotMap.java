@@ -35,7 +35,11 @@ public class RobotMap {
   public static final int wristBackLimit = 0;//the backmost position the wrist can reach
   public static final int wristFrontLimit = 1024;//the frontmost position the wrist can reach
 
+  //PID
   public static final int PIDthreshold = 512;
+  public static final double kP = 1;
+  public static final double kI = 1;
+  public static final double kD = 1;
   
   public static final int groundPos = 1024;
   public static final int lowPos = 512;

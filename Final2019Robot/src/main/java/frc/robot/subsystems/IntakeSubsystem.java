@@ -36,15 +36,24 @@ public class IntakeSubsystem extends Subsystem {
 
   public void moveIntake(double trig1, double trig2, double speed){//moves the intake in and out
 
+
+
+
     if(limitSwitch.get()){//if the ball is in the intake...
 
-      topMotor.set((-trig2)*speed);//trig2 now can eject the ball for the topMotor,
-      bottomMotor.set((-trig2)*speed);//and the bottom motor
+      if(trig1-trig2 < 0){
+        topMotor.set(trig1-trig2);
+        bottomMotor.set(trig1-trig2);
+      }
+      // topMotor.set((-trig2)*speed);//trig2 now can eject the ball for the topMotor,
+      // bottomMotor.set((-trig2)*speed);//and the bottom motor
 
     }else{//if the ball is not in the intake...
       if(Robot.m_oi.getDriverStick().getRawButton(2)){//only if the "B" is pressed
-        topMotor.set((trig1)*speed);//then the ball can be ejected from trig1
-        bottomMotor.set((trig1)*speed);
+        topMotor.set(trig1-trig2);
+        bottomMotor.set(trig1-trig2);
+        // topMotor.set((trig1)*speed);//then the ball can be ejected from trig1
+        // bottomMotor.set((trig1)*speed);
       }
       
     }

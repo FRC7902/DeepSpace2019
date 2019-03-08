@@ -63,7 +63,7 @@ public class DriveSubsystem extends Subsystem {
     }
 
 
-    drive.arcadeDrive((double) yOut * speed, joystick.getX() * speed);
+    drive.arcadeDrive((double) yOut * speed, joystick.getRawAxis(0) * speed);
   }
 
   // this method is just for normal driving

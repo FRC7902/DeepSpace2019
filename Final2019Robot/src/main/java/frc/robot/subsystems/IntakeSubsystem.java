@@ -46,8 +46,18 @@ public class IntakeSubsystem extends Subsystem {
     SmartDashboard.putString("DB/String 2",  Double.toString(trig1-trig2));
     SmartDashboard.putString("DB/String 3",  Boolean.toString(limitSwitch.get()));
 
-    topMotor.set((trig1-trig2)*speed);
-    bottomMotor.set((trig1-trig2)*speed);
+    if(trig1-trig2 > 0){//if inning
+      topMotor.set((trig1-trig2)*speed);
+      bottomMotor.set((trig1-trig2)*speed);
+
+    }else if(trig1-trig2 < 0){
+      topMotor.set(trig1-trig2);
+      bottomMotor.set(trig1-trig2);
+    }else{
+      topMotor.set(0);
+      bottomMotor.set(0);
+    }
+    
 
 
     // if(limitSwitch.get()){//if the ball is in the intake...

@@ -54,16 +54,18 @@ public class DriveSubsystem extends Subsystem {
   // this method is for Joystick driving
   public void driveJoystick(Joystick joystick, double speed) {
 
-    if((joystick.getY() > (double) yOut && joystick.getY() > RobotMap.driveStopRange) || (joystick.getY() < (double)yOut && joystick.getY() < -RobotMap.driveStopRange) ) {
-      //if joystick.getY is bigger than yOut and driveStopRange OR if joystick.getY is smaller than yOut and -driveStopRange
-      yOut = yOut + (float) joystick.getY() * 0.01f; // increment yOut by a bit of joystick.getY
+    /*
+    if((joystick.getRawAxis(1) > (double) yOut && joystick.getRawAxis(1) > RobotMap.driveStopRange) || (joystick.getRawAxis(1) < (double)yOut && joystick.getRawAxis(1) < -RobotMap.driveStopRange) ) {
+      //if joystick.getRawAxis is bigger than yOut and driveStopRange OR if joystick.getRawAxis is smaller than yOut and -driveStopRange
+      yOut = yOut + (float) joystick.getRawAxis(1) * 0.01f; // increment yOut by a bit of joystick.getRawAxis
     
-    }else if (joystick.getY() > -RobotMap.driveStopRange && joystick.getY() < RobotMap.driveStopRange) { // if joystick.getY is in between driveStopRange and -driveStopRange
+    }else if (joystick.getRawAxis(1) > -RobotMap.driveStopRange && joystick.getRawAxis(1) < RobotMap.driveStopRange) { // if joystick.getRawAxis is in between driveStopRange and -driveStopRange
       yOut = 0f; // yOut is now 0
     }
-
-
-    drive.arcadeDrive((double) yOut * speed, joystick.getRawAxis(0) * speed);
+    */
+    leftSide.set((-joystick.getRawAxis(1) - joystick.getRawAxis(0))*speed);
+    rightSide.set((-joystick.getRawAxis(1) + joystick.getRawAxis(0))*speed);
+    //drive.arcadeDrive((double) yOut * speed, joystick.getRawAxis(0) * speed);
   }
 
   // this method is just for normal driving

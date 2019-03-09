@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
@@ -35,9 +36,9 @@ public class WristSubsystem extends Subsystem {
   int time = 0;
 
   public void moveWrist(Joystick joystick, double speed){//the method on how to move the wrist
-    myTalon.set(ControlMode.PercentOutput, joystick.getRawAxis(5));//the second joystick's Y-axis is the motor
-    myTalon2.set(ControlMode.PercentOutput, joystick.getRawAxis(5));
-    checkOutOfRange();//always make sure it is in range
+    myTalon.set(ControlMode.PercentOutput, joystick.getRawAxis(5)*speed);//the second joystick's Y-axis is the motor
+    myTalon2.set(ControlMode.PercentOutput, joystick.getRawAxis(5)*speed);
+    //checkOutOfRange();//always make sure it is in range
   }
 
   public void checkOutOfRange(){
@@ -63,10 +64,15 @@ public class WristSubsystem extends Subsystem {
 
   }
 
+  public void displayInfo(){
+    SmartDashboard.putString("DB/String 4",  Integer.toString(getWristPosition()));
+    //SmartDashboard.putString("DB/String 5",  Integer.toString(desPosition));
+  }
   
   public void setWristPosition(int desPosition){//to move the desired position
 
     
+    /*
     //calculate error
     int error = 0;
     if(getWristPosition() > RobotMap.wristBottomPos && getWristPosition() < 4096){
@@ -95,29 +101,30 @@ public class WristSubsystem extends Subsystem {
     
     myTalon.set(ControlMode.PercentOutput, power);//in between -1 and 1
     
-    
+    */
     
     //FOR A BACKUP
-    // if(getWristPosition() > desPosition){//if the arm is too forward, move it back
+    int lim = 256;
+    if(getWristPosition() > desPosition){//if the arm is too forward, move it back
           
-    //   int diff = desPosition - getWristPosition();
-    //   if(diff>lim){
-    //     myTalon.set(ControlMode.PercentOutput, -1);
-    //     myTalon2.set(ControlMode.PercentOutput, -1);
-    //   }else{
-    //     myTalon.set(ControlMode.PercentOutput, diff/lim);
-    //     myTalon2.set(ControlMode.PercentOutput, diff/lim);
-    //   }
-    // }else if(getWristPosition() < desPosition){
-    //   int diff = desPosition - getWristPosition();
-    //   if(diff>lim){
-    //     myTalon.set(ControlMode.PercentOutput, 1);
-    //     myTalon2.set(ControlMode.PercentOutput, 1);
-    //   }else{
-    //     myTalon.set(ControlMode.PercentOutput, diff/lim);//otherwise move it forward
-    //     myTalon2.set(ControlMode.PercentOutput, diff/lim);
-    //   }
-    // }
+      int diff = desPosition - getWristPosition();
+      if(diff>lim){
+        myTalon.set(ControlMode.PercentOutput, -1);
+        myTalon2.set(ControlMode.PercentOutput, -1);
+      }else{
+        myTalon.set(ControlMode.PercentOutput, diff/lim);
+        myTalon2.set(ControlMode.PercentOutput, diff/lim);
+      }
+    }else if(getWristPosition() < desPosition){
+      int diff = desPosition - getWristPosition();
+      if(diff>lim){
+        myTalon.set(ControlMode.PercentOutput, 1);
+        myTalon2.set(ControlMode.PercentOutput, 1);
+      }else{
+        myTalon.set(ControlMode.PercentOutput, diff/lim);//otherwise move it forward
+        myTalon2.set(ControlMode.PercentOutput, diff/lim);
+      }
+    }
   }
   
 

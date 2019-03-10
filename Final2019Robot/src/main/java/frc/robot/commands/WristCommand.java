@@ -21,15 +21,25 @@ public class WristCommand extends Command {
   @Override
   protected void initialize() {//at the start...
     Robot.wristSubsystem.stopWrist();//stop the Wrist
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {//when the command is running
-    Robot.wristSubsystem.moveWrist(Robot.m_oi.getDriverStick(), 0.5);//take the operator's stick and a speed of 1
-    Robot.wristSubsystem.detectPresetButton();//constantly detect if button is pressed
+    Robot.wristSubsystem.displayInfo();
+    if(Robot.m_oi.getDriverStick().getRawButton(8)){
+      Robot.wristSubsystem.resetPos();
+    }
+    if(Robot.m_oi.getDriverStick().getRawButton(2)){
+      //Robot.wristSubsystem.detectPresetButton();//constantly detect if button is pressed
+      Robot.wristSubsystem.setWristPosition(-720, 0.25, 0.04);
+    }else{
+      Robot.wristSubsystem.moveWrist(Robot.m_oi.getDriverStick(), 0.5, 0.0002);//take the operator's stick and a speed of 1
+    } 
+    
+    //Robot.wristSubsystem.moveWrist(Robot.m_oi.getDriverStick(), 0.5);//take the operator's stick and a speed of 1
   }
-
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {//when is it finished?

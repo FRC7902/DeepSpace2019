@@ -27,7 +27,7 @@ public class IntakeSubsystem extends Subsystem {
   // here. Call these from Commands.
   //Victor topMotor = new Victor(RobotMap.intakeTop);
   //Victor bottomMotor = new Victor(RobotMap.intakeBottom);
-  DigitalInput limitSwitch = new DigitalInput(1);//channel 1
+  DigitalInput limitSwitch = new DigitalInput(0);//channel 1
   public WPI_VictorSPX topMotor = new WPI_VictorSPX(RobotMap.intakeTop);
   public WPI_VictorSPX bottomMotor = new WPI_VictorSPX(RobotMap.intakeBottom);
 
@@ -39,24 +39,38 @@ public class IntakeSubsystem extends Subsystem {
 
   }
 
-  public void moveIntake(double trig1, double trig2, double speed){//moves the intake in and out
+  
+
+  public void moveIntake(boolean trig1, boolean trig2, double speed){//moves the intake in and out
     
-    SmartDashboard.putString("DB/String 0",  Double.toString(trig1));
-    SmartDashboard.putString("DB/String 1",  Double.toString(trig2));
-    SmartDashboard.putString("DB/String 2",  Double.toString(trig1-trig2));
-    SmartDashboard.putString("DB/String 3",  Boolean.toString(limitSwitch.get()));
+    SmartDashboard.putString("DB/String 0", "LimSwitch"  +Boolean.toString(limitSwitch.get()));
 
-    if(trig1-trig2 > 0){//if inning
-      topMotor.set((trig1-trig2)*speed);
-      bottomMotor.set((trig1-trig2)*speed);
-
-    }else if(trig1-trig2 < 0){
-      topMotor.set(trig1-trig2);
-      bottomMotor.set(trig1-trig2);
+    if(trig1 && !trig2){//if only right
+      topMotor.set(speed);
+      bottomMotor.set(speed);
+    }else if(trig2 && !trig1){//if only left
+      topMotor.set(-1);
+      bottomMotor.set(-1);
+    }else if (trig1 && trig2){//if both
+      topMotor.set(0);
+      bottomMotor.set(0);
     }else{
       topMotor.set(0);
       bottomMotor.set(0);
     }
+
+
+    // if(trig1-trig2 > 0){//if inning
+    //   topMotor.set((trig1-trig2)*speed);
+    //   bottomMotor.set((trig1-trig2)*speed);
+
+    // }else if(trig1-trig2 < 0){
+    //   topMotor.set(trig1-trig2);
+    //   bottomMotor.set(trig1-trig2);
+    // }else{
+    //   topMotor.set(0);
+    //   bottomMotor.set(0);
+    // }
     
 
 

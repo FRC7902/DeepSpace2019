@@ -34,10 +34,17 @@ public class WristSubsystem extends Subsystem {
   
   double i = 0;
   int time = 0;
+  int startPos = 0;
+  int top = -500;
 
-  public void moveWrist(Joystick joystick, double speed){//the method on how to move the wrist
-    myTalon.set(ControlMode.PercentOutput, joystick.getRawAxis(5)*speed);//the second joystick's Y-axis is the motor
-    myTalon2.set(ControlMode.PercentOutput, joystick.getRawAxis(5)*speed);
+  public void moveWrist(Joystick joystick, double speed, double gravMult){//the method on how to move the wrist
+    myTalon.set(ControlMode.PercentOutput, (joystick.getRawAxis(3)-joystick.getRawAxis(2))*speed+ counterGrav(gravMult));//the second joystick's Y-axis is the motor
+    myTalon2.set(ControlMode.PercentOutput, (joystick.getRawAxis(3)-joystick.getRawAxis(2))*speed+counterGrav(gravMult));
+    SmartDashboard.putString("DB/String 6",  Double.toString(counterGrav(gravMult)));
+
+    // myTalon.set(ControlMode.PercentOutput, (joystick.getRawAxis(3)-joystick.getRawAxis(2))*speed+ 0.08);//the second joystick's Y-axis is the motor
+    // myTalon2.set(ControlMode.PercentOutput, (joystick.getRawAxis(3)-joystick.getRawAxis(2))*speed+0.08);
+    //SmartDashboard.putString("DB/String 6",  Double.toString(0.08));
     //checkOutOfRange();//always make sure it is in range
   }
 
@@ -60,48 +67,65 @@ public class WristSubsystem extends Subsystem {
   }
 
   public int getWristPosition(){//get the position
-    return myTalon.getSelectedSensorPosition() % 4096;
+    return (myTalon.getSelectedSensorPosition() % 4096)-startPos;
 
   }
+  public void resetPos(){
+    startPos = getWristPosition();
 
+  }
+  public double counterGrav(double mult){
+    return (top - getWristPosition())*mult;
+  }
   public void displayInfo(){
-    SmartDashboard.putString("DB/String 4",  Integer.toString(getWristPosition()));
+    SmartDashboard.putString("DB/String 1", "WristPos" + Integer.toString(getWristPosition()));
+    SmartDashboard.putString("DB/String 2", "Bpressed" + Boolean.toString(Robot.m_oi.getDriverStick().getRawButton(2)));
     //SmartDashboard.putString("DB/String 5",  Integer.toString(desPosition));
   }
   
-  public void setWristPosition(int desPosition){//to move the desired position
-
-    
-    /*
-    //calculate error
-    int error = 0;
-    if(getWristPosition() > RobotMap.wristBottomPos && getWristPosition() < 4096){
-      error = 4096-getWristPosition();
-      error += desPosition;
+  public void setWrist(int despos){
+    if(getWristPosition()>despos){
+      myTalon.set(-0.1);
+    }else if(getWristPosition()<despos){
+      myTalon.set(0.1);
     }else{
-      error = desPosition - getWristPosition();
+      myTalon.set(0);
     }
+
+  }
+
+  public void setWristPosition(int desPosition, double speed, double grav){//to move the desired position
+
+    
+    
+    //calculate error
+    // int error = 0;
+    
+    // error = desPosition - getWristPosition();
+    
     
 
-    //P
-    double p = error/RobotMap.PIDthreshold;
+    // //P
+    // double p = error/RobotMap.PIDthreshold;
 
-    //I
-    i = i*time;
-    time++;
-    i = i + p;
-    i = i/time;
+    // //I
 
-    //D
-    double d = 0;
+    // // i = i*time;
+    // // time++;
+    // // i = i + p;
+    // // i = i/time;
+    // double i = 0;
+
+    // //D
+    // double d = 0;
     
     
-    //Output
-    double power = RobotMap.kP * p + RobotMap.kI * i + RobotMap.kD * d;
+    // //Output
+    // double power = RobotMap.kP * p + RobotMap.kI * i + RobotMap.kD * d;
     
-    myTalon.set(ControlMode.PercentOutput, power);//in between -1 and 1
+    // myTalon.set(ControlMode.PercentOutput, power);//in between -1 and 1
     
-    */
+    
     
     //FOR A BACKUP
     int lim = 256;
@@ -109,33 +133,33 @@ public class WristSubsystem extends Subsystem {
           
       int diff = desPosition - getWristPosition();
       if(diff>lim){
-        myTalon.set(ControlMode.PercentOutput, -1);
-        myTalon2.set(ControlMode.PercentOutput, -1);
+        myTalon.set(ControlMode.PercentOutput, -1*speed+grav);
+        myTalon2.set(ControlMode.PercentOutput, -1*speed+grav);
       }else{
-        myTalon.set(ControlMode.PercentOutput, diff/lim);
-        myTalon2.set(ControlMode.PercentOutput, diff/lim);
+        myTalon.set(ControlMode.PercentOutput, (diff/lim)*speed+grav);
+        myTalon2.set(ControlMode.PercentOutput, (diff/lim)*speed+grav);
       }
     }else if(getWristPosition() < desPosition){
       int diff = desPosition - getWristPosition();
       if(diff>lim){
-        myTalon.set(ControlMode.PercentOutput, 1);
-        myTalon2.set(ControlMode.PercentOutput, 1);
+        myTalon.set(ControlMode.PercentOutput, 1*speed+grav);
+        myTalon2.set(ControlMode.PercentOutput, 1*speed+grav);
       }else{
-        myTalon.set(ControlMode.PercentOutput, diff/lim);//otherwise move it forward
-        myTalon2.set(ControlMode.PercentOutput, diff/lim);
+        myTalon.set(ControlMode.PercentOutput, (diff/lim)*speed+grav);//otherwise move it forward
+        myTalon2.set(ControlMode.PercentOutput, (diff/lim)*speed+grav);
       }
     }
   }
   
 
   public void detectPresetButton(){
-    if(Robot.m_oi.getDriverStick().getRawButton(1)){//if "A" button is pressed
-      setWristPosition(RobotMap.groundPos);
-    }else if(Robot.m_oi.getDriverStick().getRawButton(3)){//if "X" button is pressed
-      setWristPosition(RobotMap.lowPos);
-    }else if(Robot.m_oi.getDriverStick().getRawButton(4)){//if "Y" button is pressed
-      setWristPosition(RobotMap.midPos);
-    }
+    // if(Robot.m_oi.getDriverStick().getRawButton(1)){//if "A" button is pressed
+    //   setWristPosition(RobotMap.groundPos);
+    // }else if(Robot.m_oi.getDriverStick().getRawButton(3)){//if "X" button is pressed
+    //   setWristPosition(RobotMap.lowPos);
+    // }else if(Robot.m_oi.getDriverStick().getRawButton(4)){//if "Y" button is pressed
+    //   setWristPosition(RobotMap.midPos);
+    // }
   }
 
 

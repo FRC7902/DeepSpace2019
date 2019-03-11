@@ -24,13 +24,8 @@ public class DriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.m_oi.getDriverStick().getRawButton(3)){//center button
-      Robot.driveSubsystem.overDrive(Robot.m_oi.getDriverStick());
-    }else if(Robot.m_oi.getDriverStick().getRawButton(4)){
-      Robot.driveSubsystem.microDrive(Robot.m_oi.getDriverStick(), 0.01);
-    }else{
-      Robot.driveSubsystem.driveJoystick(Robot.m_oi.getDriverStick(), 0.5);//drive from the joystick at 0.5 speed
-    }
+
+    Robot.driveSubsystem.driveJoystick(Robot.m_oi.getDriverStick(), 0.75);//drive from the joystick at 0.5 speed
   }
 
   // Make this return true when this Command no longer needs to run execute()

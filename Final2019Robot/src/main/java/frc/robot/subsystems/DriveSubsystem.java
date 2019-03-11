@@ -53,18 +53,31 @@ public class DriveSubsystem extends Subsystem {
 
   // this method is for Joystick driving
   public void driveJoystick(Joystick joystick, double speed) {
+    double ySpeed = speed;
+    double turnSpeed = speed;
 
-    
-    if((joystick.getRawAxis(1) > (double) yOut && joystick.getRawAxis(1) > RobotMap.driveStopRange) || (joystick.getRawAxis(1) < (double)yOut && joystick.getRawAxis(1) < -RobotMap.driveStopRange) ) {
-      //if joystick.getRawAxis is bigger than yOut and driveStopRange OR if joystick.getRawAxis is smaller than yOut and -driveStopRange
-      yOut = yOut + (float) joystick.getRawAxis(1) * 0.01f; // increment yOut by a bit of joystick.getRawAxis
-    
-    }else if (joystick.getRawAxis(1) > -RobotMap.driveStopRange && joystick.getRawAxis(1) < RobotMap.driveStopRange) { // if joystick.getRawAxis is in between driveStopRange and -driveStopRange
-      yOut = 0f; // yOut is now 0
+    if(joystick.getRawButton(3)){//center button (overDrive)
+      ySpeed = 1;
+      turnSpeed = speed;
+    }else if(joystick.getRawButton(8) || joystick.getRawButton(9)){//if a microDrive(joystick button presses)
+      if(joystick.getRawButton(8)){//left joystick press
+        ySpeed = 0.01;
+      }
+      if(joystick.getRawButton(9)){
+        turnSpeed = 0.01;
+      }
+    }else{//if not OverDrive
+      if((joystick.getRawAxis(1) > (double) yOut && joystick.getRawAxis(1) > RobotMap.driveStopRange) || (joystick.getRawAxis(1) < (double)yOut && joystick.getRawAxis(1) < -RobotMap.driveStopRange) ) {
+        //if joystick.getRawAxis is bigger than yOut and driveStopRange OR if joystick.getRawAxis is smaller than yOut and -driveStopRange
+        yOut = yOut + (float) joystick.getRawAxis(1) * 0.01f; // increment yOut by a bit of joystick.getRawAxis
+      
+      }else if (joystick.getRawAxis(1) > -RobotMap.driveStopRange && joystick.getRawAxis(1) < RobotMap.driveStopRange) { // if joystick.getRawAxis is in between driveStopRange and -driveStopRange
+        yOut = 0f; // yOut is now 0
+      }
     }
     
-    leftSide.set((-joystick.getRawAxis(1) - joystick.getRawAxis(4)*0.5)*speed);
-    rightSide.set((-joystick.getRawAxis(1) + joystick.getRawAxis(4)*0.5)*speed);
+    leftSide.set(-joystick.getRawAxis(1)*ySpeed - joystick.getRawAxis(4)*turnSpeed);
+    rightSide.set(-joystick.getRawAxis(1)*ySpeed + joystick.getRawAxis(4)*turnSpeed);
     //drive.arcadeDrive((double) yOut * speed, joystick.getX() * speed);
   }
 

@@ -37,11 +37,13 @@ public class WristSubsystem extends Subsystem {
   int startPos = 0;
   int top = -500;
 
+  public double counterGrav = 0;
+
   public void moveWrist(Joystick joystick, double speed, double gravMult){//the method on how to move the wrist
     myTalon.set(ControlMode.PercentOutput, (joystick.getRawAxis(3)-joystick.getRawAxis(2))*speed+ counterGrav(gravMult));//the second joystick's Y-axis is the motor
     myTalon2.set(ControlMode.PercentOutput, (joystick.getRawAxis(3)-joystick.getRawAxis(2))*speed+counterGrav(gravMult));
-    SmartDashboard.putString("DB/String 6",  Double.toString(counterGrav(gravMult)));
-
+    //SmartDashboard.putString("DB/String 6",  Double.toString(counterGrav(gravMult)));
+    counterGrav = counterGrav(gravMult);
     // myTalon.set(ControlMode.PercentOutput, (joystick.getRawAxis(3)-joystick.getRawAxis(2))*speed+ 0.08);//the second joystick's Y-axis is the motor
     // myTalon2.set(ControlMode.PercentOutput, (joystick.getRawAxis(3)-joystick.getRawAxis(2))*speed+0.08);
     //SmartDashboard.putString("DB/String 6",  Double.toString(0.08));
@@ -71,15 +73,16 @@ public class WristSubsystem extends Subsystem {
 
   }
   public void resetPos(){
-    startPos = getWristPosition();
+    startPos += getWristPosition();
 
   }
   public double counterGrav(double mult){
     return (top - getWristPosition())*mult;
   }
   public void displayInfo(){
-    SmartDashboard.putString("DB/String 1", "WristPos" + Integer.toString(getWristPosition()));
-    SmartDashboard.putString("DB/String 2", "Bpressed" + Boolean.toString(Robot.m_oi.getDriverStick().getRawButton(2)));
+    SmartDashboard.putString("DB/String 0", "WristPos: " + Integer.toString(getWristPosition()));
+    SmartDashboard.putString("DB/String 1", "Bpressed: " + Boolean.toString(Robot.m_oi.getDriverStick().getRawButton(2)));
+    SmartDashboard.putString("DB/String 2", "cGrav: " + counterGrav);
     //SmartDashboard.putString("DB/String 5",  Integer.toString(desPosition));
   }
   

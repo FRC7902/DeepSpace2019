@@ -73,6 +73,16 @@ public class DriveSubsystem extends Subsystem {
     drive.arcadeDrive(speed, rotationSpeed);
   }
 
+  public void overDrive(Joystick joystick){
+    leftSide.set((-joystick.getRawAxis(1) - joystick.getRawAxis(4)*0.5));
+    rightSide.set((-joystick.getRawAxis(1) + joystick.getRawAxis(4)*0.5));
+  }
+
+  public void microDrive(Joystick joystick, double speed){
+    leftSide.set((-joystick.getRawAxis(1) - joystick.getRawAxis(4)*0.5)*speed);
+    rightSide.set((-joystick.getRawAxis(1) + joystick.getRawAxis(4)*0.5)*speed);
+  }
+
   // this will end the motor
   public void stop() {
     drive.stopMotor();

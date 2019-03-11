@@ -42,8 +42,6 @@ public class IntakeSubsystem extends Subsystem {
   
 
   public void moveIntake(boolean trig1, boolean trig2, double speed){//moves the intake in and out
-    
-    SmartDashboard.putString("DB/String 0", "LimSwitch"  +Boolean.toString(limitSwitch.get()));
 
     if(trig1 && !trig2){//if only right
       topMotor.set(speed);

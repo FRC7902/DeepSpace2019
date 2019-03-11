@@ -56,10 +56,7 @@ public class DriveSubsystem extends Subsystem {
     double ySpeed = speed;
     double turnSpeed = speed;
 
-    if(joystick.getRawButton(3)){//center button (overDrive)
-      ySpeed = 1;
-      turnSpeed = speed;
-    }else if(joystick.getRawButton(8) || joystick.getRawButton(9)){//if a microDrive(joystick button presses)
+    if(joystick.getRawButton(8) || joystick.getRawButton(9)){//if a microDrive(joystick button presses)
       if(joystick.getRawButton(8)){//left joystick press
         ySpeed = 0.01;
       }

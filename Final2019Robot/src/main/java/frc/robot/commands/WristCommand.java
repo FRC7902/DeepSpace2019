@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class WristCommand extends Command {
   public WristCommand() {
@@ -27,17 +28,20 @@ public class WristCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {//when the command is running
-    Robot.wristSubsystem.displayInfo();
+    Robot.wristSubsystem.displayInfo();//2, 3, 4
+
     if(Robot.m_oi.getDriverStick().getRawButton(8)){
       Robot.wristSubsystem.resetPos();
     }
     if(Robot.m_oi.getDriverStick().getRawButton(2)){//b button
       //Robot.wristSubsystem.detectPresetButton();//constantly detect if button is pressed
-      Robot.wristSubsystem.setWristPosition(-650, 0.3, 0.041);//for cargo
-    }else if(Robot.m_oi.getDriverStick().getRawButton(1)){
-      Robot.wristSubsystem.setWristPosition(-100, 0.3, 0.041);//for hatch
+      Robot.wristSubsystem.setWristPosition(RobotMap.wristCargoPos, RobotMap.wristCargoMult, RobotMap.wristCargoGrav);//for cargo
+
+    }else if(Robot.m_oi.getDriverStick().getRawButton(1)){//other button
+
+      Robot.wristSubsystem.setWristPosition(RobotMap.wristHatchPos, RobotMap.wristHatchMult, RobotMap.wristHatchGrav);//for hatch
     }else{
-      Robot.wristSubsystem.moveWrist(Robot.m_oi.getDriverStick(), 0.5, 0.0002);//take the operator's stick and a speed of 1
+      Robot.wristSubsystem.moveWrist(Robot.m_oi.getDriverStick(), RobotMap.wristSpeed, RobotMap.wristGrav);//take the operator's stick and a speed of 1
     } 
     
     //Robot.wristSubsystem.moveWrist(Robot.m_oi.getDriverStick(), 0.5);//take the operator's stick and a speed of 1

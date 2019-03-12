@@ -37,6 +37,7 @@ public class WristSubsystem extends Subsystem {
   int startPos = 0;
   int top = -500;
 
+  //Satellite
   public double counterGrav = 0;
 
   public void moveWrist(Joystick joystick, double speed, double gravMult){//the method on how to move the wrist
@@ -50,19 +51,19 @@ public class WristSubsystem extends Subsystem {
     //checkOutOfRange();//always make sure it is in range
   }
 
-  public void checkOutOfRange(){
+  // public void checkOutOfRange(){
 
-    if(getWristPosition() > RobotMap.wristFrontLimit) {//if the wrist is more forward than the frontmost wrist position
+  //   if(getWristPosition() > RobotMap.wristFrontLimit) {//if the wrist is more forward than the frontmost wrist position
       
-      myTalon.set(ControlMode.PercentOutput, -0.1);//move it back(counter clockwise)
-      myTalon2.set(ControlMode.PercentOutput, -0.1);//move it back(counter clockwise)
+  //     myTalon.set(ControlMode.PercentOutput, -0.1);//move it back(counter clockwise)
+  //     myTalon2.set(ControlMode.PercentOutput, -0.1);//move it back(counter clockwise)
       
-    }else if (getWristPosition() < RobotMap.wristBackLimit && getWristPosition() > RobotMap.wristBottomPos){//if the wrist is more back than the backmost wrist position
+  //   }else if (getWristPosition() < RobotMap.wristBackLimit && getWristPosition() > RobotMap.wristBottomPos){//if the wrist is more back than the backmost wrist position
       
-      myTalon.set(ControlMode.PercentOutput, 0.1);//move it forward
-      myTalon2.set(ControlMode.PercentOutput, 0.1);//move it forward
-    }
-  }
+  //     myTalon.set(ControlMode.PercentOutput, 0.1);//move it forward
+  //     myTalon2.set(ControlMode.PercentOutput, 0.1);//move it forward
+  //   }
+  // }
 
   public void stopWrist(){//disable the wrist
     myTalon.disable();
@@ -80,22 +81,21 @@ public class WristSubsystem extends Subsystem {
     return (top - getWristPosition())*mult;
   }
   public void displayInfo(){
-    SmartDashboard.putString("DB/String 0", "WristPos: " + Integer.toString(getWristPosition()));
-    SmartDashboard.putString("DB/String 1", "Bpressed: " + Boolean.toString(Robot.m_oi.getDriverStick().getRawButton(2)));
-    SmartDashboard.putString("DB/String 2", "cGrav: " + counterGrav);
-    //SmartDashboard.putString("DB/String 5",  Integer.toString(desPosition));
+    SmartDashboard.putString("DB/String 2", "WristPos: " + Integer.toString(getWristPosition()));
+    SmartDashboard.putString("DB/String 3", "Bpressed: " + Boolean.toString(Robot.m_oi.getDriverStick().getRawButton(2)));
+    SmartDashboard.putString("DB/String 4", "cGrav: " + counterGrav);
   }
   
-  public void setWrist(int despos){
-    if(getWristPosition()>despos){
-      myTalon.set(-0.1);
-    }else if(getWristPosition()<despos){
-      myTalon.set(0.1);
-    }else{
-      myTalon.set(0);
-    }
+  // public void setWrist(int despos){
+  //   if(getWristPosition()>despos){
+  //     myTalon.set(-0.1);
+  //   }else if(getWristPosition()<despos){
+  //     myTalon.set(0.1);
+  //   }else{
+  //     myTalon.set(0);
+  //   }
 
-  }
+  // }
 
   public void setWristPosition(int desPosition, double speed, double grav){//to move the desired position
 
@@ -155,15 +155,15 @@ public class WristSubsystem extends Subsystem {
   }
   
 
-  public void detectPresetButton(){
-    // if(Robot.m_oi.getDriverStick().getRawButton(1)){//if "A" button is pressed
-    //   setWristPosition(RobotMap.groundPos);
-    // }else if(Robot.m_oi.getDriverStick().getRawButton(3)){//if "X" button is pressed
-    //   setWristPosition(RobotMap.lowPos);
-    // }else if(Robot.m_oi.getDriverStick().getRawButton(4)){//if "Y" button is pressed
-    //   setWristPosition(RobotMap.midPos);
-    // }
-  }
+  // public void detectPresetButton(){
+  //   // if(Robot.m_oi.getDriverStick().getRawButton(1)){//if "A" button is pressed
+  //   //   setWristPosition(RobotMap.groundPos);
+  //   // }else if(Robot.m_oi.getDriverStick().getRawButton(3)){//if "X" button is pressed
+  //   //   setWristPosition(RobotMap.lowPos);
+  //   // }else if(Robot.m_oi.getDriverStick().getRawButton(4)){//if "Y" button is pressed
+  //   //   setWristPosition(RobotMap.midPos);
+  //   // }
+  // }
 
 
   @Override

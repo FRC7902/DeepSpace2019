@@ -29,21 +29,45 @@ public class RobotMap {
 
   //Drive
   public static final double driveStopRange = 0.1;//the area when the joystick is ineffective
+  public static final double driveFBSpeed = 1;
+  public static final double driveTurnSpeed = 0.75;
+
+  public static final int driveMicroFBButton = 9;
+  public static final int driveMicroTurnButton = 10;
+
 
   //Wrist
-  public static final int wristBottomPos = 2048;
-  public static final int wristBackLimit = 0;//the backmost position the wrist can reach
-  public static final int wristFrontLimit = 1024;//the frontmost position the wrist can reach
+
+  public static final int wristCargoPos = -650;
+  public static final double wristCargoMult = 0.3;
+  public static final double wristCargoGrav = 0.041;
+
+  public static final int wristHatchPos = -100;
+  public static final double wristHatchMult = 0.3;
+  public static final double wristHatchGrav = 0.041;
+
+  public static final double wristSpeed = 0.5;
+  public static final double wristGrav = 0.0002;
+
+  // public static final int wristBottomPos = 2048;
+  // public static final int wristBackLimit = 0;//the backmost position the wrist can reach
+  // public static final int wristFrontLimit = 1024;//the frontmost position the wrist can reach
 
   //PID
-  public static final int PIDthreshold = 512;
-  public static final double kP = 1;
-  public static final double kI = 1;
-  public static final double kD = 1;
+  // public static final int PIDthreshold = 512;
+  // public static final double kP = 1;
+  // public static final double kI = 1;
+  // public static final double kD = 1;
   
-  public static final int groundPos = 1024;
-  public static final int lowPos = 512;
-  public static final int midPos = 256;
+  // public static final int groundPos = 1024;
+  // public static final int lowPos = 512;
+  // public static final int midPos = 256;
+
+
+  //Intake
+  public static final double intakeSpeed = 0.75;
+  public static final double outtakeSpeed = -1;
+
 
   //a method for removing an element from an array
   public static float[] removeTheElement(float[] arr, int index){

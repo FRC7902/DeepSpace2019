@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class DriveSubsystem extends Subsystem {
@@ -34,6 +36,9 @@ public class DriveSubsystem extends Subsystem {
    */
   float yOut = 0;
   
+  //Satellites
+  public boolean microDriveFBButtonPressed = false;
+  public boolean microDriveTurnButtonPressed = false;
 
   public DifferentialDrive drive;
 
@@ -53,14 +58,19 @@ public class DriveSubsystem extends Subsystem {
 
   // this method is for Joystick driving
   public void driveJoystick(Joystick joystick, double fSpeed, double tSpeed) {
+    //set defaults
     double ySpeed = fSpeed;
     double turnSpeed = tSpeed;
 
-    if(joystick.getRawButton(9) || joystick.getRawButton(10)){//if a microDrive(joystick button presses)
-      if(joystick.getRawButton(9)){//left joystick press
+    microDriveFBButtonPressed = joystick.getRawButton(RobotMap.driveMicroFBButton);
+    microDriveTurnButtonPressed = joystick.getRawButton(RobotMap.driveMicroTurnButton);
+
+    if(joystick.getRawButton(RobotMap.driveMicroFBButton) || joystick.getRawButton(RobotMap.driveMicroTurnButton)){//if a microDrive(joystick button presses)
+      if(joystick.getRawButton(RobotMap.driveMicroFBButton)){//microDrive for Front and Back
         ySpeed = 0.01;
+        
       }
-      if(joystick.getRawButton(10)){
+      if(joystick.getRawButton(RobotMap.driveMicroTurnButton)){//microDrive for turning
         turnSpeed = 0.01;
       }
     }else{//if not MicroDrive
@@ -79,20 +89,26 @@ public class DriveSubsystem extends Subsystem {
     //drive.arcadeDrive((double) yOut * speed, joystick.getX() * speed);
   }
 
+  public void displayInfo(){
+    SmartDashboard.putString("DB/String 0", "FBMicro: " + microDriveFBButtonPressed);
+    SmartDashboard.putString("DB/String 1", "TurnMicro: " + microDriveTurnButtonPressed);
+  }
+
+
   // this method is just for normal driving
-  public void drive(double speed, double rotationSpeed) {
-    drive.arcadeDrive(speed, rotationSpeed);
-  }
+  // public void drive(double speed, double rotationSpeed) {
+  //   drive.arcadeDrive(speed, rotationSpeed);
+  // }
 
-  public void overDrive(Joystick joystick){
-    leftSide.set((-joystick.getRawAxis(1) - joystick.getRawAxis(4)*0.5));
-    rightSide.set((-joystick.getRawAxis(1) + joystick.getRawAxis(4)*0.5));
-  }
+  // public void overDrive(Joystick joystick){
+  //   leftSide.set((-joystick.getRawAxis(1) - joystick.getRawAxis(4)*0.5));
+  //   rightSide.set((-joystick.getRawAxis(1) + joystick.getRawAxis(4)*0.5));
+  // }
 
-  public void microDrive(Joystick joystick, double speed){
-    leftSide.set((-joystick.getRawAxis(1) - joystick.getRawAxis(4)*0.5)*speed);
-    rightSide.set((-joystick.getRawAxis(1) + joystick.getRawAxis(4)*0.5)*speed);
-  }
+  // public void microDrive(Joystick joystick, double speed){
+  //   leftSide.set((-joystick.getRawAxis(1) - joystick.getRawAxis(4)*0.5)*speed);
+  //   rightSide.set((-joystick.getRawAxis(1) + joystick.getRawAxis(4)*0.5)*speed);
+  // }
 
   // this will end the motor
   public void stop() {

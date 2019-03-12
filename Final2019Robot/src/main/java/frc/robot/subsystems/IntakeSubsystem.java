@@ -40,17 +40,14 @@ public class IntakeSubsystem extends Subsystem {
 
   
 
-  public void moveIntake(boolean trig1, boolean trig2, double speed){//moves the intake in and out
+  public void moveIntake(boolean trig1, boolean trig2, double inSpeed, double outSpeed){//moves the intake in and out
 
     if(trig1 && !trig2){//if only right
-      topMotor.set(speed);
-      bottomMotor.set(speed);
+      topMotor.set(inSpeed);
+      bottomMotor.set(inSpeed);
     }else if(trig2 && !trig1){//if only left
-      topMotor.set(-1);
-      bottomMotor.set(-1);
-    }else if (trig1 && trig2){//if both
-      topMotor.set(0);
-      bottomMotor.set(0);
+      topMotor.set(outSpeed);
+      bottomMotor.set(outSpeed);
     }else{
       topMotor.set(0);
       bottomMotor.set(0);

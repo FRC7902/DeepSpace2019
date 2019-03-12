@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class DriveCommand extends Command {
   public DriveCommand() {
@@ -24,8 +25,8 @@ public class DriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    Robot.driveSubsystem.driveJoystick(Robot.m_oi.getDriverStick(), 1, 0.75);//drive from the joystick at 0.5 speed
+    Robot.driveSubsystem.displayInfo();//0, 1
+    Robot.driveSubsystem.driveJoystick(Robot.m_oi.getDriverStick(), RobotMap.driveFBSpeed, RobotMap.driveTurnSpeed);//drive from the joystick at 0.5 speed
   }
 
   // Make this return true when this Command no longer needs to run execute()

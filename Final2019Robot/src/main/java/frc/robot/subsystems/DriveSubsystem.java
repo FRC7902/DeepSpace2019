@@ -52,25 +52,26 @@ public class DriveSubsystem extends Subsystem {
   }
 
   // this method is for Joystick driving
-  public void driveJoystick(Joystick joystick, double speed) {
-    double ySpeed = speed;
-    double turnSpeed = speed;
+  public void driveJoystick(Joystick joystick, double fSpeed, double tSpeed) {
+    double ySpeed = fSpeed;
+    double turnSpeed = tSpeed;
 
-    if(joystick.getRawButton(8) || joystick.getRawButton(9)){//if a microDrive(joystick button presses)
-      if(joystick.getRawButton(8)){//left joystick press
+    if(joystick.getRawButton(9) || joystick.getRawButton(10)){//if a microDrive(joystick button presses)
+      if(joystick.getRawButton(9)){//left joystick press
         ySpeed = 0.01;
       }
-      if(joystick.getRawButton(9)){
+      if(joystick.getRawButton(10)){
         turnSpeed = 0.01;
       }
-    }else{//if not OverDrive
-      if((joystick.getRawAxis(1) > (double) yOut && joystick.getRawAxis(1) > RobotMap.driveStopRange) || (joystick.getRawAxis(1) < (double)yOut && joystick.getRawAxis(1) < -RobotMap.driveStopRange) ) {
-        //if joystick.getRawAxis is bigger than yOut and driveStopRange OR if joystick.getRawAxis is smaller than yOut and -driveStopRange
-        yOut = yOut + (float) joystick.getRawAxis(1) * 0.01f; // increment yOut by a bit of joystick.getRawAxis
+    }else{//if not MicroDrive
       
-      }else if (joystick.getRawAxis(1) > -RobotMap.driveStopRange && joystick.getRawAxis(1) < RobotMap.driveStopRange) { // if joystick.getRawAxis is in between driveStopRange and -driveStopRange
-        yOut = 0f; // yOut is now 0
-      }
+      // if((joystick.getRawAxis(1) > (double) yOut && joystick.getRawAxis(1) > RobotMap.driveStopRange) || (joystick.getRawAxis(1) < (double)yOut && joystick.getRawAxis(1) < -RobotMap.driveStopRange) ) {
+      //   //if joystick.getRawAxis is bigger than yOut and driveStopRange OR if joystick.getRawAxis is smaller than yOut and -driveStopRange
+      //   yOut = yOut + (float) joystick.getRawAxis(1) * 0.01f; // increment yOut by a bit of joystick.getRawAxis
+      
+      // }else if (joystick.getRawAxis(1) > -RobotMap.driveStopRange && joystick.getRawAxis(1) < RobotMap.driveStopRange) { // if joystick.getRawAxis is in between driveStopRange and -driveStopRange
+      //   yOut = 0f; // yOut is now 0
+      // }
     }
     
     leftSide.set(-joystick.getRawAxis(1)*ySpeed - joystick.getRawAxis(4)*turnSpeed);

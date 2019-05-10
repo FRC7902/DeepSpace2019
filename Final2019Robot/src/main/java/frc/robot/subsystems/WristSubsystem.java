@@ -27,7 +27,7 @@ public class WristSubsystem extends Subsystem {
   WPI_TalonSRX myTalon2 = new WPI_TalonSRX(RobotMap.wristMotor2);
 
   public WristSubsystem() {
-    myTalon2.setInverted(true);
+    myTalon2.setInverted(false);
     myTalon.setInverted(false);
     
   }

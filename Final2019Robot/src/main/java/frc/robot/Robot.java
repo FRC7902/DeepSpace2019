@@ -55,19 +55,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
 
-    //Outputs
-    SmartDashboard.putString("DB/String 0", "NA");
-    SmartDashboard.putString("DB/String 1", "NA");
-    SmartDashboard.putString("DB/String 2", "NA");
-    SmartDashboard.putString("DB/String 3", "NA");
-    SmartDashboard.putString("DB/String 4", "NA");
-    SmartDashboard.putString("DB/String 5", "NA");
-    SmartDashboard.putString("DB/String 6", "NA");
-    SmartDashboard.putString("DB/String 7", "NA");
-    SmartDashboard.putString("DB/String 8", "NA");
-    SmartDashboard.putString("DB/String 9", "NA");
   }
-
   @Override
   public void disabledInit() {
   }

@@ -64,7 +64,6 @@ public class DriveSubsystem extends Subsystem {
     //set defaults
     double ySpeed = fSpeed;
     double turnSpeed = tSpeed;
-    double speedLimiter = 0.4; //A value in between 0 and 1 for max speed limit
 
     // microDriveFBButtonPressed = joystick.getRawButton(RobotMap.driveMicroFBButton);
     // microDriveTurnButtonPressed = joystick.getRawButton(RobotMap.driveMicroTurnButton);
@@ -88,8 +87,8 @@ public class DriveSubsystem extends Subsystem {
     //   // }
     // }
     
-    leftSide.set((-joystick.getRawAxis(1)*ySpeed - joystick.getRawAxis(4)*turnSpeed)*speedLimiter);
-    rightSide.set((-joystick.getRawAxis(1)*ySpeed + joystick.getRawAxis(4)*turnSpeed)*speedLimiter);
+    leftSide.set(-joystick.getRawAxis(1)*ySpeed - joystick.getRawAxis(4)*turnSpeed);
+    rightSide.set(-joystick.getRawAxis(1)*ySpeed + joystick.getRawAxis(4)*turnSpeed);
     //drive.arcadeDrive((double) yOut * speed, joystick.getX() * speed);
 
     SmartDashboard.putString("DB/String 0", "Raw: " + Double.toString(-joystick.getRawAxis(1)*ySpeed));

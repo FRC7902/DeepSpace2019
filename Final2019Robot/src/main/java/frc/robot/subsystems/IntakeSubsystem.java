@@ -49,8 +49,8 @@ public class IntakeSubsystem extends Subsystem {
       topMotor.set(outSpeed);
       bottomMotor.set(outSpeed);
     }else{
-      topMotor.set(0);
-      bottomMotor.set(0);
+      //topMotor.set(0);
+      //bottomMotor.set(0);
     }
 
 

@@ -21,6 +21,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.SolenoidSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import frc.robot.commands.DriveToDistanceCommand;
 
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static WristSubsystem wristSubsystem = new WristSubsystem();
+  public static SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
   public static OI m_oi;
 
   Command m_autonomousCommand;

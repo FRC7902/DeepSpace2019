@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-//import frc.robot.RobotMap;
 import frc.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -28,7 +27,7 @@ public class WristSubsystem extends Subsystem {
   WPI_TalonSRX myTalon2 = new WPI_TalonSRX(RobotMap.wristMotor2);
 
   public WristSubsystem() {
-    myTalon2.setInverted(false);
+    myTalon2.setInverted(true);
     myTalon.setInverted(false);
     
   }
@@ -39,16 +38,16 @@ public class WristSubsystem extends Subsystem {
   int top = -500;
 
   //Satellite
-  //public double counterGrav = 0;
+  public double counterGrav = 0;
 
   public void moveWrist(Joystick joystick, double speed, double gravMult){//the method on how to move the wrist
-    myTalon.set(ControlMode.PercentOutput, (joystick.getRawAxis(2)-joystick.getRawAxis(3))*speed+ counterGrav(gravMult));//the second joystick's Y-axis is the motor
-    myTalon2.set(ControlMode.PercentOutput, (joystick.getRawAxis(2)-joystick.getRawAxis(3))*speed+counterGrav(gravMult));
-    SmartDashboard.putString("DB/String 4",  Double.toString(counterGrav(gravMult)));
-    //counterGrav = counterGrav(gravMult);
+    myTalon.set(ControlMode.PercentOutput, (joystick.getRawAxis(3)-joystick.getRawAxis(2))*speed+ counterGrav(gravMult));//the second joystick's Y-axis is the motor
+    myTalon2.set(ControlMode.PercentOutput, (joystick.getRawAxis(3)-joystick.getRawAxis(2))*speed+counterGrav(gravMult));
+    //SmartDashboard.putString("DB/String 6",  Double.toString(counterGrav(gravMult)));
+    counterGrav = counterGrav(gravMult);
     // myTalon.set(ControlMode.PercentOutput, (joystick.getRawAxis(3)-joystick.getRawAxis(2))*speed+ 0.08);//the second joystick's Y-axis is the motor
     // myTalon2.set(ControlMode.PercentOutput, (joystick.getRawAxis(3)-joystick.getRawAxis(2))*speed+0.08);
-    SmartDashboard.putString("DB/String 5",  Double.toString(joystick.getRawAxis(3)-joystick.getRawAxis(2)));
+    //SmartDashboard.putString("DB/String 6",  Double.toString(0.08));
     //checkOutOfRange();//always make sure it is in range
   }
 
@@ -84,7 +83,7 @@ public class WristSubsystem extends Subsystem {
   public void displayInfo(){
     SmartDashboard.putString("DB/String 2", "WristPos: " + Integer.toString(getWristPosition()));
     SmartDashboard.putString("DB/String 3", "Bpressed: " + Boolean.toString(Robot.m_oi.getDriverStick().getRawButton(2)));
-    //SmartDashboard.putString("DB/String 4", "cGrav: " + counterGrav);
+    SmartDashboard.putString("DB/String 4", "cGrav: " + counterGrav);
   }
   
   // public void setWrist(int despos){
@@ -119,7 +118,7 @@ public class WristSubsystem extends Subsystem {
     // // i = i + p;
     // // i = i/time;
     // double i = 0;
-  
+
     // //D
     // double d = 0;
     
@@ -136,22 +135,22 @@ public class WristSubsystem extends Subsystem {
     if(getWristPosition() > desPosition){//if the arm is too forward, move it back
           
       int diff = desPosition - getWristPosition();
-      // if(diff>lim){
-      //   myTalon.set(ControlMode.PercentOutput, 1*speed+grav);
-      //   myTalon2.set(ControlMode.PercentOutput, 1*speed+grav);
-      // }else{
-      myTalon.set(ControlMode.PercentOutput, (-diff/lim)*speed+grav);
-      myTalon2.set(ControlMode.PercentOutput, (-diff/lim)*speed+grav);
-      // }
+      if(diff>lim){
+        myTalon.set(ControlMode.PercentOutput, -1*speed+grav);
+        myTalon2.set(ControlMode.PercentOutput, -1*speed+grav);
+      }else{
+        myTalon.set(ControlMode.PercentOutput, (diff/lim)*speed+grav);
+        myTalon2.set(ControlMode.PercentOutput, (diff/lim)*speed+grav);
+      }
     }else if(getWristPosition() < desPosition){
       int diff = desPosition - getWristPosition();
-      // if(diff>lim){
-      //   myTalon.set(ControlMode.PercentOutput, -1*speed+grav);
-      //   myTalon2.set(ControlMode.PercentOutput, -1*speed+grav);
-      // }else{
-      myTalon.set(ControlMode.PercentOutput, (-diff/lim)*speed+grav);//otherwise move it forward
-      myTalon2.set(ControlMode.PercentOutput, (-diff/lim)*speed+grav);
-      // }
+      if(diff>lim){
+        myTalon.set(ControlMode.PercentOutput, 1*speed+grav);
+        myTalon2.set(ControlMode.PercentOutput, 1*speed+grav);
+      }else{
+        myTalon.set(ControlMode.PercentOutput, (diff/lim)*speed+grav);//otherwise move it forward
+        myTalon2.set(ControlMode.PercentOutput, (diff/lim)*speed+grav);
+      }
     }
   }
   

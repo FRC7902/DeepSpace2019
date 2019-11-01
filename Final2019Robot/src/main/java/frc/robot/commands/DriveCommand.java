@@ -25,7 +25,7 @@ public class DriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //Robot.driveSubsystem.displayInfo();//0, 1
+    Robot.driveSubsystem.displayInfo();//0, 1
     Robot.driveSubsystem.driveJoystick(Robot.m_oi.getDriverStick(), RobotMap.driveFBSpeed, RobotMap.driveTurnSpeed);//drive from the joystick at 0.5 speed
   }
 

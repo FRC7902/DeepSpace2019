@@ -39,8 +39,8 @@ public class RobotMap {
   //Wrist
 
   public static final int wristCargoPos = -650;
-  public static final double wristCargoMult = 0.31;
-  public static final double wristCargoGrav = -0.03;
+  public static final double wristCargoMult = 0.3;
+  public static final double wristCargoGrav = 0.041;
 
   public static final int wristHatchPos = -100;
   public static final double wristHatchMult = 0.3;

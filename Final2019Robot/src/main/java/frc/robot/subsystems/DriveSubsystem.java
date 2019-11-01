@@ -27,7 +27,6 @@ public class DriveSubsystem extends Subsystem {
   public WPI_VictorSPX backRight = new WPI_VictorSPX(RobotMap.backRight);
   public WPI_VictorSPX backLeft = new WPI_VictorSPX(RobotMap.backLeft);
 
-
   // group these motors as speedControllers
   SpeedController leftSide = new SpeedControllerGroup(frontLeft, backLeft);
   SpeedController rightSide = new SpeedControllerGroup(frontRight, backRight);
@@ -65,41 +64,37 @@ public class DriveSubsystem extends Subsystem {
     double ySpeed = fSpeed;
     double turnSpeed = tSpeed;
 
-    // microDriveFBButtonPressed = joystick.getRawButton(RobotMap.driveMicroFBButton);
-    // microDriveTurnButtonPressed = joystick.getRawButton(RobotMap.driveMicroTurnButton);
+    microDriveFBButtonPressed = joystick.getRawButton(RobotMap.driveMicroFBButton);
+    microDriveTurnButtonPressed = joystick.getRawButton(RobotMap.driveMicroTurnButton);
 
-    // if(joystick.getRawButton(RobotMap.driveMicroFBButton) || joystick.getRawButton(RobotMap.driveMicroTurnButton)){//if a microDrive(joystick button presses)
-    //   if(joystick.getRawButton(RobotMap.driveMicroFBButton)){//microDrive for Front and Back
-    //     ySpeed = 0.01;
+    if(joystick.getRawButton(RobotMap.driveMicroFBButton) || joystick.getRawButton(RobotMap.driveMicroTurnButton)){//if a microDrive(joystick button presses)
+      if(joystick.getRawButton(RobotMap.driveMicroFBButton)){//microDrive for Front and Back
+        ySpeed = 0.01;
         
-    //   }
-    //   if(joystick.getRawButton(RobotMap.driveMicroTurnButton)){//microDrive for turning
-    //     turnSpeed = 0.01;
-    //   }
-    // }else{//if not MicroDrive
+      }
+      if(joystick.getRawButton(RobotMap.driveMicroTurnButton)){//microDrive for turning
+        turnSpeed = 0.01;
+      }
+    }else{//if not MicroDrive
       
-    //   // if((joystick.getRawAxis(1) > (double) yOut && joystick.getRawAxis(1) > RobotMap.driveStopRange) || (joystick.getRawAxis(1) < (double)yOut && joystick.getRawAxis(1) < -RobotMap.driveStopRange) ) {
-    //   //   //if joystick.getRawAxis is bigger than yOut and driveStopRange OR if joystick.getRawAxis is smaller than yOut and -driveStopRange
-    //   //   yOut = yOut + (float) joystick.getRawAxis(1) * 0.01f; // increment yOut by a bit of joystick.getRawAxis
+      // if((joystick.getRawAxis(1) > (double) yOut && joystick.getRawAxis(1) > RobotMap.driveStopRange) || (joystick.getRawAxis(1) < (double)yOut && joystick.getRawAxis(1) < -RobotMap.driveStopRange) ) {
+      //   //if joystick.getRawAxis is bigger than yOut and driveStopRange OR if joystick.getRawAxis is smaller than yOut and -driveStopRange
+      //   yOut = yOut + (float) joystick.getRawAxis(1) * 0.01f; // increment yOut by a bit of joystick.getRawAxis
       
-    //   // }else if (joystick.getRawAxis(1) > -RobotMap.driveStopRange && joystick.getRawAxis(1) < RobotMap.driveStopRange) { // if joystick.getRawAxis is in between driveStopRange and -driveStopRange
-    //   //   yOut = 0f; // yOut is now 0
-    //   // }
-    // }
+      // }else if (joystick.getRawAxis(1) > -RobotMap.driveStopRange && joystick.getRawAxis(1) < RobotMap.driveStopRange) { // if joystick.getRawAxis is in between driveStopRange and -driveStopRange
+      //   yOut = 0f; // yOut is now 0
+      // }
+    }
     
     leftSide.set(-joystick.getRawAxis(1)*ySpeed - joystick.getRawAxis(4)*turnSpeed);
     rightSide.set(-joystick.getRawAxis(1)*ySpeed + joystick.getRawAxis(4)*turnSpeed);
     //drive.arcadeDrive((double) yOut * speed, joystick.getX() * speed);
-
-    SmartDashboard.putString("DB/String 0", "Raw: " + Double.toString(-joystick.getRawAxis(1)*ySpeed));
-    SmartDashboard.putString("DB/String 1", "Turn: " + Double.toString(joystick.getRawAxis(4)*turnSpeed));
-
   }
 
-  // public void displayInfo(){
-  //   SmartDashboard.putString("DB/String 0", "FBMicro: " + microDriveFBButtonPressed);
-  //   SmartDashboard.putString("DB/String 1", "TurnMicro: " + microDriveTurnButtonPressed);
-  // }
+  public void displayInfo(){
+    SmartDashboard.putString("DB/String 0", "FBMicro: " + microDriveFBButtonPressed);
+    SmartDashboard.putString("DB/String 1", "TurnMicro: " + microDriveTurnButtonPressed);
+  }
 
 
   // this method is just for normal driving

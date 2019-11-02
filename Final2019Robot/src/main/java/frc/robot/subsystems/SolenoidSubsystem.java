@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -17,7 +18,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class SolenoidSubsystem extends Subsystem {
 
   // Declaration and Initiation
-  private DoubleSolenoid doubleSolenoid = new DoubleSolenoid(9, 10);
+  private DoubleSolenoid doubleSolenoid = new DoubleSolenoid(RobotMap.frontValve, RobotMap.backValve);
   
   public SolenoidSubsystem() {
     // Close both channels

@@ -24,6 +24,10 @@ public class RobotMap {
   public static final int intakeTop = 7;
   public static final int intakeBottom = 8;
 
+  //Solenoid Valves
+  public static final int frontValve = 9;
+  public static final int backValve = 10;
+
   
   //COMMAND CENTER
 

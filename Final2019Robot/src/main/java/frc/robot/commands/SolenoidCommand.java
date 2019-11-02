@@ -27,11 +27,11 @@ public class SolenoidCommand extends Command {
   @Override
   protected void execute() {
     if(Robot.m_oi.getDriverStick().getRawButton(2)){
-      Robot.solenoidSubsystem.closeValve();
+      //Robot.solenoidSubsystem.closeValve();
       Robot.solenoidSubsystem.openFrontValve();
     }
     if(Robot.m_oi.getDriverStick().getRawButton(3)){
-      Robot.solenoidSubsystem.closeValve();
+      //Robot.solenoidSubsystem.closeValve();
       Robot.solenoidSubsystem.openBackValve();
     }
 

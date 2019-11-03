@@ -25,19 +25,24 @@ public class RobotMap {
   public static final int intakeBottom = 8;
 
   //Solenoid Valves
-  public static final int frontValve = 9;
-  public static final int backValve = 10;
+  public static final int frontValve = 0;
+  public static final int backValve = 1;
 
   
   //COMMAND CENTER
 
   //Drive
+
+  public static final double driveSpeedLimiter = 0.6;
+
   public static final double driveStopRange = 0.1;//the area when the joystick is ineffective
   public static final double driveFBSpeed = 1;
   public static final double driveTurnSpeed = 0.75;
 
   public static final int driveMicroFBButton = 9;
   public static final int driveMicroTurnButton = 10;
+
+  
 
 
   //Wrist

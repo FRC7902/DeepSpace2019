@@ -64,7 +64,7 @@ public class DriveSubsystem extends Subsystem {
     //set defaults
     double ySpeed = fSpeed;
     double turnSpeed = tSpeed;
-    double speedLimiter = 0.4; //A value in between 0 and 1 for max speed limit
+    double speedLimiter = RobotMap.driveSpeedLimiter; //A value in between 0 and 1 for max speed limit
 
     microDriveFBButtonPressed = joystick.getRawButton(RobotMap.driveMicroFBButton);
     microDriveTurnButtonPressed = joystick.getRawButton(RobotMap.driveMicroTurnButton);
